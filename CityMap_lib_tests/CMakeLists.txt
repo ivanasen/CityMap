@@ -3,5 +3,5 @@ project(CityMap_lib_tests)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(CityMap_tests_run GraphTest.cpp)
+add_executable(CityMap_tests_run NodeTest.cpp)
 target_link_libraries(CityMap_tests_run CityMap_lib)

@@ -3,8 +3,8 @@ project(CityMap_lib)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(HEADER_FILES Graph.cpp Graph.h)
+include_directories(${PROJECT_SOURCE_DIR}/include/)
 
-set(SOURCE_FILES Graph.cpp Graph.cpp Graph.h Graph.cpp Graph.h)
+add_library(CityMap_lib INTERFACE)
 
-add_library(CityMap_lib STATIC ${SOURCE_FILES} ${HEADER_FILES})
+target_include_directories(CityMap_lib INTERFACE ${PROJECT_SOURCE_DIR}/include/)

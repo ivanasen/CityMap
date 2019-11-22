@@ -2,7 +2,6 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="CityMap" targetName="CityMap_lib" />
       <config projectName="CityMap" targetName="CityMap_tests_run" />
     </generated>
   </component>
@@ -12,7 +11,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7eb60aec-fc87-4d21-b705-2d71b6d1a9ea" name="Default Changelist" comment="" />
+    <list default="true" id="7eb60aec-fc87-4d21-b705-2d71b6d1a9ea" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/CityMap_lib/include/Node.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CityMap_lib/include/Vertex.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CityMap_lib_tests/NodeTest.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CityMap_lib/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CityMap_lib/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CityMap_lib/Graph.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CityMap_lib/Graph.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CityMap_lib_tests/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CityMap_lib_tests/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CityMap_lib_tests/GraphTest.cpp" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +30,20 @@
   </component>
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileTemplateManagerImpl">
@@ -34,7 +57,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="OCResolveContextSettings">
-    <option name="configuration" value="0-CityMap_lib" />
+    <option name="configuration" value="0-CityMap_tests_run" />
   </component>
   <component name="ProjectId" id="1TywPtFstu6PMbvH4oAZSwRcMjr" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -48,6 +71,9 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/CityMap_lib/src" />
+      <recent name="$PROJECT_DIR$/CityMap_lib" />
+      <recent name="$PROJECT_DIR$/CityMap_lib/include" />
       <recent name="$PROJECT_DIR$/CityMap_lib_tests/catch2" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -66,7 +92,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Catch.All in CityMap_tests_run">
+  <component name="RunManager">
     <configuration name="All in CityMap_tests_run" type="CMakeCatchTestRunConfigurationType" factoryName="Catch Test" nameIsGenerated="true" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CityMap" TARGET_NAME="CityMap_tests_run" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="CityMap" RUN_TARGET_NAME="CityMap_tests_run" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -79,21 +105,6 @@
         <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CityMap_lib" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CityMap" TARGET_NAME="CityMap_lib" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CityMap_tests_run" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CityMap" TARGET_NAME="CityMap_tests_run" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="CityMap" RUN_TARGET_NAME="CityMap_tests_run">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="Catch.All in CityMap_tests_run" />
-      <item itemvalue="CMake Application.CityMap_lib" />
-      <item itemvalue="CMake Application.CityMap_tests_run" />
-    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -107,7 +118,8 @@
       <updated>1574445622336</updated>
       <workItem from="1574445635630" duration="86000" />
       <workItem from="1574449825482" duration="1516000" />
-      <workItem from="1574451557603" duration="2260000" />
+      <workItem from="1574451557603" duration="6045000" />
+      <workItem from="1574459604676" duration="3236000" />
     </task>
     <servers />
   </component>
