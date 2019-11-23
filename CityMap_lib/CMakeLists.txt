@@ -3,8 +3,10 @@ project(CityMap_lib)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(${PROJECT_SOURCE_DIR}/include/)
+file(GLOB SOURCE_FILES "src/*.cpp")
 
-add_library(CityMap_lib INTERFACE)
+include_directories(include/)
 
-target_include_directories(CityMap_lib INTERFACE ${PROJECT_SOURCE_DIR}/include/)
+add_library(CityMap_lib STATIC ${SOURCE_FILES} src/Crossroad.cpp)
+
+target_include_directories(CityMap_lib PUBLIC include/)
