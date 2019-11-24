@@ -14,7 +14,7 @@ namespace CityMapLib {
     public:
         typedef std::shared_ptr<Crossroad> CrossroadPtr;
 
-        explicit Crossroad(std::string name);
+        Crossroad(int id, std::string name);
 
         void addRoadTo(const CrossroadPtr &crossroad, int weight);
 
@@ -22,16 +22,21 @@ namespace CityMapLib {
 
         void setBlocked(bool isBlocked);
 
+        bool isBlocked() const;
+
         std::string getName() const;
 
         const std::vector<Road> &getRoads() const;
 
+        int getId() const;
+
         bool operator==(const Crossroad &other) const;
 
     private:
+        const int id;
         const std::string name;
         std::vector<Road> roads;
-        bool blocked{false};
+        bool blocked = false;
     };
 
 }

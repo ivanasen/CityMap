@@ -8,9 +8,9 @@ namespace CityMapLib {
         if (crossroadIndexes.find(crossroad) != crossroadIndexes.end())
             return;
 
-        CrossroadPtr crossroadPtr = std::make_shared<Crossroad>(crossroad);
+        CrossroadPtr crossroadPtr = std::make_shared<Crossroad>(crossroads.size(), crossroad);
+        crossroadIndexes.insert({crossroad, crossroads.size()});
         crossroads.push_back(crossroadPtr);
-        crossroadIndexes.insert({crossroad, crossroads.size() - 1});
     }
 
     void City::addRoad(const std::string &from, const std::string &to, int weight) {
@@ -36,5 +36,4 @@ namespace CityMapLib {
 
         return crossroads[iter->second];
     }
-
 }

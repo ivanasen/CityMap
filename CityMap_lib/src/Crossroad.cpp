@@ -3,7 +3,7 @@
 
 namespace CityMapLib {
 
-    Crossroad::Crossroad(std::string name) : name(std::move(name)) {
+    Crossroad::Crossroad(int id, std::string name) : id(id), name(std::move(name)) {
     }
 
     void Crossroad::addRoadTo(const CrossroadPtr &crossroad, int weight) {
@@ -31,11 +31,18 @@ namespace CityMapLib {
     }
 
     bool Crossroad::operator==(const Crossroad &other) const {
-        return name == other.getName();
+        return id == other.getId();
     }
 
     void Crossroad::setBlocked(bool isBlocked) {
         blocked = isBlocked;
     }
 
+    int Crossroad::getId() const {
+        return id;
+    }
+
+    bool Crossroad::isBlocked() const {
+        return blocked;
+    }
 }
