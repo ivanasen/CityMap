@@ -6,25 +6,34 @@
 #include <unordered_map>
 #include "Road.h"
 
-typedef std::shared_ptr<Crossroad> CrossroadPtr;
+namespace CityMapLib {
 
-class Crossroad {
-public:
-    explicit Crossroad(std::string name);
+    class Road;
 
-    void addRoadTo(const CrossroadPtr &crossroad, int weight);
+    class Crossroad {
+    public:
+        typedef std::shared_ptr<Crossroad> CrossroadPtr;
 
-    bool removeRoadTo(const CrossroadPtr &crossroad);
+        explicit Crossroad(std::string name);
 
-    std::string getName() const;
+        void addRoadTo(const CrossroadPtr &crossroad, int weight);
 
-    const std::vector<Road> &getRoads() const;
+        bool removeRoadTo(const CrossroadPtr &crossroad);
 
-    bool operator==(const Crossroad &other) const;
+        void setBlocked(bool isBlocked);
 
-private:
-    const std::string name;
-    std::vector<Road> roads;
-};
+        std::string getName() const;
+
+        const std::vector<Road> &getRoads() const;
+
+        bool operator==(const Crossroad &other) const;
+
+    private:
+        const std::string name;
+        std::vector<Road> roads;
+        bool blocked{false};
+    };
+
+}
 
 #endif //CITYMAP_CROSSROAD_H

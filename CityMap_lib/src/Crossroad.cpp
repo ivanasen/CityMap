@@ -1,33 +1,41 @@
 #include <utility>
 #include "Crossroad.h"
 
-Crossroad::Crossroad(std::string name) : name(std::move(name)) {
-}
+namespace CityMapLib {
 
-void Crossroad::addRoadTo(const CrossroadPtr &crossroad, int weight) {
-    roads.emplace_back(crossroad, weight);
-}
-
-bool Crossroad::removeRoadTo(const CrossroadPtr &crossroad) {
-    for (size_t i = 0; i < roads.size(); ++i) {
-        if (roads[i].getCrossroad() == crossroad) {
-            roads[i] = roads.back();
-            roads.pop_back();
-            return true;
-        }
+    Crossroad::Crossroad(std::string name) : name(std::move(name)) {
     }
 
-    return false;
-}
+    void Crossroad::addRoadTo(const CrossroadPtr &crossroad, int weight) {
+        roads.emplace_back(crossroad, weight);
+    }
 
-std::string Crossroad::getName() const {
-    return name;
-}
+    bool Crossroad::removeRoadTo(const CrossroadPtr &crossroad) {
+        for (size_t i = 0; i < roads.size(); ++i) {
+            if (roads[i].getCrossroad() == crossroad) {
+                roads[i] = roads.back();
+                roads.pop_back();
+                return true;
+            }
+        }
 
-const std::vector<Road> &Crossroad::getRoads() const {
-    return roads;
-}
+        return false;
+    }
 
-bool Crossroad::operator==(const Crossroad &other) const {
-    return name == other.getName();
+    std::string Crossroad::getName() const {
+        return name;
+    }
+
+    const std::vector<Road> &Crossroad::getRoads() const {
+        return roads;
+    }
+
+    bool Crossroad::operator==(const Crossroad &other) const {
+        return name == other.getName();
+    }
+
+    void Crossroad::setBlocked(bool isBlocked) {
+        blocked = isBlocked;
+    }
+
 }

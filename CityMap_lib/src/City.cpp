@@ -2,39 +2,39 @@
 
 #include <memory>
 
-void City::addCrossroad(const std::string &crossroad) {
-    CrossroadPtr crossroadPtr = std::make_shared<Crossroad>(crossroad);
-    crossroads.insert({crossroad, crossroadPtr});
-}
+namespace CityMapLib {
 
-void City::addRoad(const std::string &from, const std::string &to, int weight) {
-    auto iterFrom = crossroads.find(from);
-    auto iterTo = crossroads.find(to);
+    void City::addCrossroad(const std::string &crossroad) {
+        if (crossroadIndexes.find(crossroad) != crossroadIndexes.end())
+            return;
 
-    if (iterFrom == crossroads.end())
-        throwInvalidCrossroad(from);
-    if (iterTo == crossroads.end())
-        throwInvalidCrossroad(to);
+        CrossroadPtr crossroadPtr = std::make_shared<Crossroad>(crossroad);
+        crossroads.push_back(crossroadPtr);
+        crossroadIndexes.insert({crossroad, crossroads.size() - 1});
+    }
 
-    iterFrom->second->addRoadTo(iterTo->second, weight);
-}
+    void City::addRoad(const std::string &from, const std::string &to, int weight) {
+        CrossroadPtr fromPtr = getCrossroadByName(from);
+        CrossroadPtr toPtr = getCrossroadByName(to);
+        fromPtr->addRoadTo(toPtr, weight);
+    }
 
-unsigned long City::removeRoad(const std::string &from, const std::string &to) {
-    auto iterFrom = crossroads.find(from);
-    auto iterTo = crossroads.find(to);
+    bool City::removeRoad(const std::string &from, const std::string &to) {
+        CrossroadPtr fromPtr = getCrossroadByName(from);
+        CrossroadPtr toPtr = getCrossroadByName(to);
+        return fromPtr->removeRoadTo(toPtr);
+    }
 
-    if (iterFrom == crossroads.end())
-        throwInvalidCrossroad(from);
-    if (iterTo == crossroads.end())
-        throwInvalidCrossroad(to);
+    const std::vector<CrossroadPtr> &City::getCrossroads() const {
+        return crossroads;
+    }
 
-    return iterFrom->second->removeRoadTo(iterTo->second);
-}
+    const CrossroadPtr &City::getCrossroadByName(const std::string &name) const {
+        auto iter = crossroadIndexes.find(name);
+        if (iter == crossroadIndexes.end())
+            throw std::invalid_argument("Crossroad with name \"" + name + "\" does not exist in this city.");
 
-void City::throwInvalidCrossroad(const std::string &crossroad) {
-    throw std::invalid_argument("Crossroad " + crossroad + " does not exist in this city.");
-}
+        return crossroads[iter->second];
+    }
 
-bool City::hasRoadBetween(const std::string &from, const std::string &to) const {
-    return false;
 }

@@ -6,22 +6,25 @@
 #include <string>
 #include "Crossroad.h"
 
-class City {
-private:
-    std::unordered_map<std::string, CrossroadPtr> crossroads;
+namespace CityMapLib {
 
-public:
-    void addCrossroad(const std::string &crossroad);
+    class City {
+    private:
+        std::unordered_map<std::string, int> crossroadIndexes;
+        std::vector<CrossroadPtr> crossroads;
 
-    void addRoad(const std::string &from, const std::string &to, int weight);
+    public:
+        void addCrossroad(const std::string &crossroad);
 
-    unsigned long removeRoad(const std::string &from, const std::string &to);
+        void addRoad(const std::string &from, const std::string &to, int weight);
 
-    bool hasRoadBetween(const std::string &from, const std::string &to) const;
+        bool removeRoad(const std::string &from, const std::string &to);
 
-private:
-    static void throwInvalidCrossroad(const std::string &crossroad);
-};
+        const std::vector<CrossroadPtr> &getCrossroads() const;
 
+        const CrossroadPtr &getCrossroadByName(const std::string &name) const;
+    };
+
+}
 
 #endif //CITYMAP_CITY_H

@@ -5,36 +5,27 @@
 #include <utility>
 #include "Crossroad.h"
 
-class Crossroad;
+namespace CityMapLib {
 
-typedef std::shared_ptr<Crossroad> CrossroadPtr;
+    class Crossroad;
 
-class Road {
-private:
-    int weight;
-    CrossroadPtr crossroad;
+    typedef std::shared_ptr<Crossroad> CrossroadPtr;
 
-public:
-    Road(CrossroadPtr crossroad, int weight)
-            : crossroad(std::move(crossroad)), weight(weight) {}
+    class Road {
+    private:
+        int weight;
+        CrossroadPtr crossroad;
 
-    Road &operator=(const Road &other) {
-        weight = other.getWeight();
-        crossroad = other.getCrossroad();
-        return *this;
-    }
+    public:
+        Road(CrossroadPtr crossroad, int weight);
 
-    bool operator==(const Road &other) const {
-        return weight == other.getWeight() && crossroad == other.getCrossroad();
-    }
+        bool operator==(const Road &other) const;
 
-    [[nodiscard]] int getWeight() const {
-        return weight;
-    }
+        [[nodiscard]] int getWeight() const;
 
-    [[nodiscard]] const CrossroadPtr &getCrossroad() const {
-        return crossroad;
-    }
-};
+        [[nodiscard]] const CrossroadPtr &getCrossroad() const;
+    };
+
+}
 
 #endif //CITYMAP_ROAD_H
