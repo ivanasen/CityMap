@@ -6,13 +6,15 @@ namespace CityMapLib {
     Crossroad::Crossroad(int id, std::string name) : id(id), name(std::move(name)) {
     }
 
-    void Crossroad::addRoadTo(const CrossroadPtr &crossroad, int weight) {
-        roads.emplace_back(crossroad, weight);
+    void Crossroad::addRoadTo(const std::shared_ptr<Crossroad> &crossroad, int weight) {
+        std::weak_ptr<Crossroad> weakPtr(crossroad);
+        roads.emplace_back(weakPtr, weight);
     }
 
-    bool Crossroad::removeRoadTo(const CrossroadPtr &crossroad) {
+    bool Crossroad::removeRoadTo(const std::shared_ptr<Crossroad> &crossroad) {
         for (size_t i = 0; i < roads.size(); ++i) {
-            if (roads[i].getCrossroad() == crossroad) {
+            std::weak_ptr<Crossroad> ptr = roads[i].getCrossroad();
+            if (crossroad == ptr.lock()) {
                 roads[i] = roads.back();
                 roads.pop_back();
                 return true;

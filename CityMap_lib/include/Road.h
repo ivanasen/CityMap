@@ -9,21 +9,19 @@ namespace CityMapLib {
 
     class Crossroad;
 
-    typedef std::shared_ptr<Crossroad> CrossroadPtr;
-
     class Road {
     private:
         int weight;
-        CrossroadPtr crossroad;
+        std::weak_ptr<Crossroad> crossroad;
 
     public:
-        Road(CrossroadPtr crossroad, int weight);
+        Road(std::weak_ptr<Crossroad> crossroad, int weight);
 
         bool operator==(const Road &other) const;
 
         [[nodiscard]] int getWeight() const;
 
-        [[nodiscard]] const CrossroadPtr &getCrossroad() const;
+        [[nodiscard]] const std::weak_ptr<Crossroad> &getCrossroad() const;
     };
 
 }

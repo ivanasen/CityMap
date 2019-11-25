@@ -4,11 +4,11 @@
 
 namespace CityMapLib {
 
-    Path::Path(std::vector<CrossroadPtr> path, int distance)
-        : path(std::move(path)), distance(distance) {
+    Path::Path(std::vector<std::shared_ptr<Crossroad>> path, int distance)
+            : path(std::move(path)), distance(distance) {
     }
 
-    const std::vector<CrossroadPtr> &Path::getPath() const {
+    const std::vector<std::shared_ptr<Crossroad>> &Path::getPath() const {
         return path;
     }
 
@@ -17,8 +17,8 @@ namespace CityMapLib {
     }
 
     Path Path::addToPath(const Road &road) {
-        std::vector<CrossroadPtr> newPath(path);
-        newPath.push_back(road.getCrossroad());
+        std::vector<std::shared_ptr<Crossroad>> newPath(path);
+        newPath.push_back(road.getCrossroad().lock());
         return Path(newPath, distance + road.getWeight());
     }
 

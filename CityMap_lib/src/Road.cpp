@@ -4,20 +4,19 @@
 
 namespace CityMapLib {
 
-    Road::Road(CrossroadPtr crossroad, int weight)
+    Road::Road(std::weak_ptr<Crossroad> crossroad, int weight)
             : crossroad(std::move(crossroad)), weight(weight) {
     }
 
     bool Road::operator==(const Road &other) const {
-        return weight == other.getWeight() && crossroad == other.getCrossroad();
+        return weight == other.getWeight() && crossroad.lock() == other.getCrossroad().lock();
     }
 
     int Road::getWeight() const {
         return weight;
     }
 
-    const CrossroadPtr &Road::getCrossroad() const {
+    const std::weak_ptr<Crossroad> &Road::getCrossroad() const {
         return crossroad;
     }
-
 }

@@ -8,14 +8,14 @@ namespace CityMapLib {
 
     class Path {
     private:
-        std::vector<CrossroadPtr> path;
+        std::vector<std::shared_ptr<Crossroad>> path;
         int distance;
     public:
-        Path(std::vector<CrossroadPtr> path, int distance);
+        Path(std::vector<std::shared_ptr<Crossroad>> path, int distance);
 
         Path addToPath(const Road &road);
 
-        [[nodiscard]] const std::vector<CrossroadPtr> &getPath() const;
+        [[nodiscard]] const std::vector<std::shared_ptr<Crossroad>> &getPath() const;
 
         [[nodiscard]] int getDistance() const;
 

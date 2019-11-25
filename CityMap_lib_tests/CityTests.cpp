@@ -1,3 +1,4 @@
+#include <include/DeadEndFinder.h>
 #include "catch.hpp"
 #include "City.h"
 
@@ -41,7 +42,7 @@ TEST_CASE("addRoad works correctly", "[CityTests]") {
     CityMapLib::CrossroadPtr toPtr = city.getCrossroadByName(to);
     std::vector<CityMapLib::Road> roads = fromPtr->getRoads();
 
-    REQUIRE(roads[0].getCrossroad() == toPtr);
+    REQUIRE(roads[0].getCrossroad().lock() == toPtr);
     REQUIRE(roads[0].getWeight() == weight);
 }
 

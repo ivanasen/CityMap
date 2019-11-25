@@ -12,13 +12,11 @@ namespace CityMapLib {
 
     class Crossroad {
     public:
-        typedef std::shared_ptr<Crossroad> CrossroadPtr;
-
         Crossroad(int id, std::string name);
 
-        void addRoadTo(const CrossroadPtr &crossroad, int weight);
+        void addRoadTo(const std::shared_ptr<Crossroad> &crossroad, int weight);
 
-        bool removeRoadTo(const CrossroadPtr &crossroad);
+        bool removeRoadTo(const std::shared_ptr<Crossroad> &crossroad);
 
         void setBlocked(bool isBlocked);
 

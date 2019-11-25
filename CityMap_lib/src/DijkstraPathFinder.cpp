@@ -1,5 +1,6 @@
 #include <queue>
 #include <unordered_set>
+#include <include/DeadEndFinder.h>
 #include "DijkstraPathFinder.h"
 
 namespace CityMapLib {
@@ -25,9 +26,14 @@ namespace CityMapLib {
                 return true;
 
             for (const Road &road : crossroads[currentCrossroad]->getRoads()) {
-                int crossroadId = road.getCrossroad()->getId();
-                if (!visited[crossroadId])
-                    q.push(crossroadId);
+                const std::weak_ptr<Crossroad> &weakPtr = road.getCrossroad();
+                if (CrossroadPtr crossroad = weakPtr.lock()) {
+                    int crossroadId = crossroad->getId();
+                    if (!visited[crossroadId])
+                        q.push(crossroadId);
+                } else {
+                    throw std::runtime_error("Crossroad pointer has been released unexpectedly!");
+                }
             }
         }
 
@@ -66,9 +72,14 @@ namespace CityMapLib {
 
             if (shortestPathsCount[currentCrossroad->getId()] <= pathsCount) {
                 for (const Road &p : currentCrossroad->getRoads()) {
-                    if (!(p.getCrossroad()->isBlocked())) {
-                        Path newPath = current.addToPath(p);
-                        q.push(newPath);
+                    const std::weak_ptr<Crossroad> &weakPtr = p.getCrossroad();
+                    if (CrossroadPtr crossroad = weakPtr.lock()) {
+                        if (!(crossroad->isBlocked())) {
+                            Path newPath = current.addToPath(p);
+                            q.push(newPath);
+                        }
+                    } else {
+                        throw std::runtime_error("Crossroad pointer has been released unexpectedly!");
                     }
                 }
             }
