@@ -52,8 +52,6 @@ namespace CityMapLib {
                     }
 
                     visited[nextId] = true;
-                } else {
-                    throw std::runtime_error("Crossroad pointer has been released unexpectedly!");
                 }
             }
         }

@@ -1,6 +1,14 @@
 #include "catch.hpp"
 #include "DeadEndFinder.h"
 
+TEST_CASE("DeadEndFinder doesn't find any dead-ends in city with less than 2 crossroads", "[DeadEndFinderTests]") {
+    CityMapLib::City c;
+    REQUIRE(CityMapLib::DeadEndFinder::findDeadEnds(c).empty());
+
+    c.addCrossroad("0");
+    REQUIRE(CityMapLib::DeadEndFinder::findDeadEnds(c).empty());
+}
+
 TEST_CASE("DeadEndFinder works correctly", "[DeadEndFinderTests]") {
     CityMapLib::City c;
 

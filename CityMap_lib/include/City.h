@@ -8,10 +8,12 @@
 
 namespace CityMapLib {
 
+    using CrossroadPtr = std::shared_ptr<Crossroad>;
+
     class City {
     private:
         std::unordered_map<std::string, int> crossroadIndexes;
-        std::vector<std::shared_ptr<Crossroad>> crossroads;
+        std::vector<CrossroadPtr> crossroads;
 
     public:
         void addCrossroad(const std::string &crossroad);
@@ -20,9 +22,9 @@ namespace CityMapLib {
 
         bool removeRoad(const std::string &from, const std::string &to);
 
-        const std::vector<std::shared_ptr<Crossroad>> &getCrossroads() const;
+        const std::vector<CrossroadPtr> &getCrossroads() const;
 
-        std::shared_ptr<Crossroad> getCrossroadByName(const std::string &name) const;
+        CrossroadPtr getCrossroadByName(const std::string &name) const;
     };
 
 }

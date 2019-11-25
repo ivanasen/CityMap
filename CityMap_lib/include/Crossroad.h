@@ -20,13 +20,13 @@ namespace CityMapLib {
 
         void setBlocked(bool isBlocked);
 
-        bool isBlocked() const;
+        [[nodiscard]] bool isBlocked() const;
 
-        std::string getName() const;
+        [[nodiscard]] std::string getName() const;
 
-        const std::vector<Road> &getRoads() const;
+        [[nodiscard]] const std::vector<Road> &getRoads() const;
 
-        int getId() const;
+        [[nodiscard]] int getId() const;
 
         bool operator==(const Crossroad &other) const;
 
@@ -36,7 +36,6 @@ namespace CityMapLib {
         std::vector<Road> roads;
         bool blocked = false;
     };
-
 }
 
 #endif //CITYMAP_CROSSROAD_H

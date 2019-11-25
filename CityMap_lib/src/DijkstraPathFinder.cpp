@@ -31,8 +31,6 @@ namespace CityMapLib {
                     int crossroadId = crossroad->getId();
                     if (!visited[crossroadId])
                         q.push(crossroadId);
-                } else {
-                    throw std::runtime_error("Crossroad pointer has been released unexpectedly!");
                 }
             }
         }
@@ -78,8 +76,6 @@ namespace CityMapLib {
                             Path newPath = current.addToPath(p);
                             q.push(newPath);
                         }
-                    } else {
-                        throw std::runtime_error("Crossroad pointer has been released unexpectedly!");
                     }
                 }
             }

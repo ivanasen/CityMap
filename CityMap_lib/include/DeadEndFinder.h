@@ -7,8 +7,6 @@
 
 namespace CityMapLib {
 
-    using CrossroadPtr = std::shared_ptr<Crossroad>;
-
     class DeadEndFinder {
     public:
         static std::vector<std::pair<CrossroadPtr, CrossroadPtr>> findDeadEnds(const City &city);

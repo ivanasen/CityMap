@@ -2,20 +2,21 @@
 #define CITYMAP_PATH_H
 
 #include <vector>
+#include "City.h"
 #include "Crossroad.h"
 
 namespace CityMapLib {
 
     class Path {
     private:
-        std::vector<std::shared_ptr<Crossroad>> path;
+        std::vector<CrossroadPtr> path;
         int distance;
     public:
-        Path(std::vector<std::shared_ptr<Crossroad>> path, int distance);
+        Path(std::vector<CrossroadPtr> path, int distance);
 
         Path addToPath(const Road &road);
 
-        [[nodiscard]] const std::vector<std::shared_ptr<Crossroad>> &getPath() const;
+        [[nodiscard]] const std::vector<CrossroadPtr> &getPath() const;
 
         [[nodiscard]] int getDistance() const;
 
