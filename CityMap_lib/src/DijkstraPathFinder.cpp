@@ -8,7 +8,30 @@ namespace CityMapLib {
     }
 
     bool DijkstraPathFinder::hasPath(const std::string &from, const std::string &to) const {
-        return !findBestPaths(from, to, 1).empty();
+        CrossroadPtr fromPtr = city.getCrossroadByName(from);
+        CrossroadPtr toPtr = city.getCrossroadByName(to);
+        std::vector<CrossroadPtr> crossroads = city.getCrossroads();
+
+        std::vector<bool> visited(crossroads.size());
+        std::queue<int> q;
+
+        q.push(fromPtr->getId());
+
+        while (!q.empty()) {
+            int currentCrossroad = q.front();
+            q.pop();
+
+            if (currentCrossroad == toPtr->getId())
+                return true;
+
+            for (const Road &road : crossroads[currentCrossroad]->getRoads()) {
+                int crossroadId = road.getCrossroad()->getId();
+                if (!visited[crossroadId])
+                    q.push(crossroadId);
+            }
+        }
+
+        return false;
     }
 
     std::vector<Path> DijkstraPathFinder::findBestPaths(

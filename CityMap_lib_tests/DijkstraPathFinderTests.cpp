@@ -9,6 +9,7 @@ TEST_CASE("hasPath works correctly", "[DijkstraPathFinder]") {
     c.addCrossroad("1");
     c.addCrossroad("2");
     c.addCrossroad("3");
+    c.addCrossroad("4");
 
     c.addRoad("0", "1", 1);
     c.addRoad("1", "2", 1);
@@ -23,6 +24,10 @@ TEST_CASE("hasPath works correctly", "[DijkstraPathFinder]") {
     REQUIRE_FALSE(finder.hasPath("0", "3"));
     REQUIRE_FALSE(finder.hasPath("1", "3"));
     REQUIRE_FALSE(finder.hasPath("2", "3"));
+    REQUIRE_FALSE(finder.hasPath("0", "4"));
+    REQUIRE_FALSE(finder.hasPath("1", "4"));
+    REQUIRE_FALSE(finder.hasPath("2", "4"));
+    REQUIRE_FALSE(finder.hasPath("3", "4"));
 }
 
 TEST_CASE("findBestPaths works correctly when there is no loop", "[DijkstraPathFinder]") {
