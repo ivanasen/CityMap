@@ -1,10 +1,12 @@
-#include "Path.h"
-
 #include <utility>
+
+#include "Path.h"
 
 namespace CityMapLib {
 
-    Path::Path(std::vector<CrossroadPtr> path, int distance) : path(std::move(path)), distance(distance) {}
+    Path::Path(std::vector<CrossroadPtr> path, int distance)
+        : path(std::move(path)), distance(distance) {
+    }
 
     const std::vector<CrossroadPtr> &Path::getPath() const {
         return path;
@@ -23,4 +25,5 @@ namespace CityMapLib {
     bool Path::operator==(const Path &other) const {
         return path == other.getPath() && distance == other.getDistance();
     }
+
 }

@@ -1,6 +1,6 @@
-#include "DijkstraPathFinder.h"
 #include <queue>
 #include <unordered_set>
+#include "DijkstraPathFinder.h"
 
 namespace CityMapLib {
 
@@ -23,6 +23,9 @@ namespace CityMapLib {
 
         std::vector<Path> bestPaths;
 
+        if (fromPtr->isBlocked() || toPtr->isBlocked())
+            return bestPaths;
+
         std::priority_queue<Path, std::vector<Path>, Path::DistanceComparator> q;
         q.push(Path({fromPtr}, 0));
 
@@ -40,8 +43,10 @@ namespace CityMapLib {
 
             if (shortestPathsCount[currentCrossroad->getId()] <= pathsCount) {
                 for (const Road &p : currentCrossroad->getRoads()) {
-                    Path newPath = current.addToPath(p);
-                    q.push(newPath);
+                    if (!(p.getCrossroad()->isBlocked())) {
+                        Path newPath = current.addToPath(p);
+                        q.push(newPath);
+                    }
                 }
             }
         }
