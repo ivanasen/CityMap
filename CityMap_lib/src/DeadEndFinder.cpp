@@ -36,16 +36,16 @@ namespace CityMapLib {
             CrossroadPtr currentCrossroad = crossroads[currId];
             s.pop();
 
-            std::vector<Road> currentRoads = currentCrossroad->getRoads();
+            std::vector<Road> currentRoads = currentCrossroad->getOutgoingRoads();
 
-            for (const Road &road : crossroads[currId]->getRoads()) {
+            for (const Road &road : crossroads[currId]->getOutgoingRoads()) {
                 std::weak_ptr<Crossroad> nextWeakPtr = road.getCrossroad();
 
                 if (CrossroadPtr nextCrossroad = nextWeakPtr.lock()) {
                     int nextId = nextCrossroad->getId();
 
                     if (!visited[nextId]) {
-                        if (nextCrossroad->getRoads().empty())
+                        if (nextCrossroad->getOutgoingRoads().empty())
                             deadEnds.emplace_back(crossroads[currId], nextWeakPtr);
                         else
                             s.push(nextId);

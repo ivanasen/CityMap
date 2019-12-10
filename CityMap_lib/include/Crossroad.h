@@ -14,9 +14,13 @@ namespace CityMapLib {
     public:
         Crossroad(int id, std::string name);
 
-        void addRoadTo(const std::shared_ptr<Crossroad> &crossroad, int weight);
+        void addRoadTo(const std::weak_ptr<Crossroad> &crossroad, int weight);
 
-        bool removeRoadTo(const std::shared_ptr<Crossroad> &crossroad);
+        void addRoadFrom(const std::weak_ptr<Crossroad> &crossroad, int weight);
+
+        bool removeRoadTo(const std::weak_ptr<Crossroad> &crossroad);
+
+        bool removeRoadFrom(const std::weak_ptr<Crossroad> &crossroad);
 
         void setBlocked(bool isBlocked);
 
@@ -24,7 +28,9 @@ namespace CityMapLib {
 
         [[nodiscard]] std::string getName() const;
 
-        [[nodiscard]] const std::vector<Road> &getRoads() const;
+        [[nodiscard]] const std::vector<Road> &getOutgoingRoads() const;
+
+        [[nodiscard]] const std::vector<Road> &getIncomingRoads() const;
 
         [[nodiscard]] int getId() const;
 
@@ -33,7 +39,8 @@ namespace CityMapLib {
     private:
         const int id;
         const std::string name;
-        std::vector<Road> roads;
+        std::vector<Road> outgoingRoads;
+        std::vector<Road> incomingRoads;
         bool blocked = false;
     };
 }

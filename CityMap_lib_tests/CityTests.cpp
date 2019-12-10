@@ -40,7 +40,7 @@ TEST_CASE("addRoad works correctly", "[CityTests]") {
 
     CityMapLib::CrossroadPtr fromPtr = city.getCrossroadByName(from);
     CityMapLib::CrossroadPtr toPtr = city.getCrossroadByName(to);
-    std::vector<CityMapLib::Road> roads = fromPtr->getRoads();
+    std::vector<CityMapLib::Road> roads = fromPtr->getOutgoingRoads();
 
     REQUIRE(roads[0].getCrossroad().lock() == toPtr);
     REQUIRE(roads[0].getWeight() == weight);
@@ -60,5 +60,5 @@ TEST_CASE("removeRoad works correctly", "[CityTests]") {
 
     CityMapLib::CrossroadPtr fromPtr = city.getCrossroadByName(from);
 
-    REQUIRE(fromPtr->getRoads().empty());
+    REQUIRE(fromPtr->getOutgoingRoads().empty());
 }

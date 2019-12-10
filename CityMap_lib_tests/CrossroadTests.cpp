@@ -11,7 +11,7 @@ TEST_CASE("addRoadTo adds correctly", "[CrossroadTests]") {
 
     c.addRoadTo(c1, 10);
     c.addRoadTo(c2, 13);
-    std::vector<CityMapLib::Road> roads = c.getRoads();
+    std::vector<CityMapLib::Road> roads = c.getOutgoingRoads();
     REQUIRE(roads[0] == CityMapLib::Road(c1, 10));
     REQUIRE(roads[1] == CityMapLib::Road(c2, 13));
 }

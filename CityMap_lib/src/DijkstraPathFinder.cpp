@@ -1,5 +1,4 @@
 #include <queue>
-#include <unordered_set>
 #include <include/DeadEndFinder.h>
 #include "DijkstraPathFinder.h"
 
@@ -25,7 +24,7 @@ namespace CityMapLib {
             if (currentCrossroad == toPtr->getId())
                 return true;
 
-            for (const Road &road : crossroads[currentCrossroad]->getRoads()) {
+            for (const Road &road : crossroads[currentCrossroad]->getOutgoingRoads()) {
                 const std::weak_ptr<Crossroad> &weakPtr = road.getCrossroad();
                 if (CrossroadPtr crossroad = weakPtr.lock()) {
                     int crossroadId = crossroad->getId();
@@ -69,7 +68,7 @@ namespace CityMapLib {
             }
 
             if (shortestPathsCount[currentCrossroad->getId()] <= pathsCount) {
-                for (const Road &p : currentCrossroad->getRoads()) {
+                for (const Road &p : currentCrossroad->getOutgoingRoads()) {
                     const std::weak_ptr<Crossroad> &weakPtr = p.getCrossroad();
                     if (CrossroadPtr crossroad = weakPtr.lock()) {
                         if (!(crossroad->isBlocked())) {

@@ -17,12 +17,13 @@ namespace CityMapLib {
         CrossroadPtr fromPtr = getCrossroadByName(from);
         CrossroadPtr toPtr = getCrossroadByName(to);
         fromPtr->addRoadTo(toPtr, weight);
+        toPtr->addRoadFrom(fromPtr, weight);
     }
 
     bool City::removeRoad(const std::string &from, const std::string &to) {
         CrossroadPtr fromPtr = getCrossroadByName(from);
         CrossroadPtr toPtr = getCrossroadByName(to);
-        return fromPtr->removeRoadTo(toPtr);
+        return fromPtr->removeRoadTo(toPtr) && toPtr->removeRoadFrom(fromPtr);
     }
 
     const std::vector<CrossroadPtr> &City::getCrossroads() const {

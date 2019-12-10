@@ -1,5 +1,4 @@
 #include <utility>
-#include "City.h"
 #include "Crossroad.h"
 
 namespace CityMapLib {
@@ -7,17 +6,35 @@ namespace CityMapLib {
     Crossroad::Crossroad(int id, std::string name) : id(id), name(std::move(name)) {
     }
 
-    void Crossroad::addRoadTo(const CrossroadPtr &crossroad, int weight) {
+    void Crossroad::addRoadTo(const std::weak_ptr<Crossroad> &crossroad, int weight) {
         std::weak_ptr<Crossroad> weakPtr(crossroad);
-        roads.emplace_back(weakPtr, weight);
+        outgoingRoads.emplace_back(weakPtr, weight);
     }
 
-    bool Crossroad::removeRoadTo(const CrossroadPtr &crossroad) {
-        for (size_t i = 0; i < roads.size(); ++i) {
-            std::weak_ptr<Crossroad> ptr = roads[i].getCrossroad();
-            if (crossroad == ptr.lock()) {
-                roads[i] = roads.back();
-                roads.pop_back();
+    bool Crossroad::removeRoadTo(const std::weak_ptr<Crossroad> &crossroad) {
+        for (size_t i = 0; i < outgoingRoads.size(); ++i) {
+            std::weak_ptr<Crossroad> ptr = outgoingRoads[i].getCrossroad();
+            if (crossroad.lock() == ptr.lock()) {
+                outgoingRoads[i] = outgoingRoads.back();
+                outgoingRoads.pop_back();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void Crossroad::addRoadFrom(const std::weak_ptr<Crossroad> &crossroad, int weight) {
+        std::weak_ptr<Crossroad> weakPtr(crossroad);
+        incomingRoads.emplace_back(weakPtr, weight);
+    }
+
+    bool Crossroad::removeRoadFrom(const std::weak_ptr<Crossroad> &crossroad) {
+        for (size_t i = 0; i < incomingRoads.size(); ++i) {
+            std::weak_ptr<Crossroad> ptr = incomingRoads[i].getCrossroad();
+            if (crossroad.lock() == ptr.lock()) {
+                incomingRoads[i] = incomingRoads.back();
+                incomingRoads.pop_back();
                 return true;
             }
         }
@@ -29,8 +46,8 @@ namespace CityMapLib {
         return name;
     }
 
-    const std::vector<Road> &Crossroad::getRoads() const {
-        return roads;
+    const std::vector<Road> &Crossroad::getOutgoingRoads() const {
+        return outgoingRoads;
     }
 
     bool Crossroad::operator==(const Crossroad &other) const {
@@ -47,5 +64,9 @@ namespace CityMapLib {
 
     bool Crossroad::isBlocked() const {
         return blocked;
+    }
+
+    const std::vector<Road> &Crossroad::getIncomingRoads() const {
+        return incomingRoads;
     }
 }
