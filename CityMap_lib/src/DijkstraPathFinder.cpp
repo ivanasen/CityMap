@@ -1,6 +1,7 @@
 #include <queue>
 #include <include/DeadEndFinder.h>
 #include "DijkstraPathFinder.h"
+#include "GraphUtilities.h"
 
 namespace CityMapLib {
 
@@ -81,5 +82,21 @@ namespace CityMapLib {
         }
 
         return bestPaths;
+    }
+
+    bool DijkstraPathFinder::hasPathToAll(const std::string &start) const {
+        CrossroadPtr startNode = city.getCrossroadByName(start);
+        const std::vector<CrossroadPtr> &crossroads = city.getCrossroads();
+        std::vector<bool> visited(crossroads.size());
+
+        dfsUtil(visited, startNode);
+
+        for (bool b : visited) {
+            if (!b) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

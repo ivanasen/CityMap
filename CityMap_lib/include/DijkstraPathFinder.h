@@ -16,6 +16,8 @@ namespace CityMapLib {
 
         [[nodiscard]] bool hasPath(const std::string &from, const std::string &to) const override;
 
+        bool hasPathToAll(const std::string &start) const override;
+
         [[nodiscard]] std::vector<Path> findBestPaths(
                 const std::string &from,
                 const std::string &to,

@@ -105,3 +105,78 @@ TEST_CASE("findBestPaths works when there are blocked crossroads", "[DijkstraPat
 
     REQUIRE(bestPathsAfter[0] == CityMapLib::Path({cross0, cross2}, 10));
 }
+
+TEST_CASE("hasPathToAll works", "[DijkstraPathFinder]") {
+    SECTION("Single crossroad city") {
+        CityMapLib::City c;
+        c.addCrossroad("test");
+        CityMapLib::DijkstraPathFinder f(c);
+
+        REQUIRE(f.hasPathToAll("test"));
+    }
+
+    SECTION("Small size city") {
+        CityMapLib::City c;
+        c.addCrossroad("0");
+        c.addCrossroad("1");
+        c.addCrossroad("2");
+
+        c.addRoad("0", "1", 1);
+        c.addRoad("1", "2", 1);
+        c.addRoad("2", "0", 1);
+
+        CityMapLib::DijkstraPathFinder f(c);
+
+        REQUIRE(f.hasPathToAll("0"));
+    }
+
+    SECTION("Medium size city") {
+        CityMapLib::City c;
+        c.addCrossroad("0");
+        c.addCrossroad("1");
+        c.addCrossroad("2");
+        c.addCrossroad("3");
+        c.addCrossroad("4");
+
+        c.addRoad("0", "1", 1);
+        c.addRoad("1", "2", 1);
+        c.addRoad("2", "3", 1);
+        c.addRoad("3", "4", 1);
+        c.addRoad("4", "2", 1);
+        c.addRoad("2", "0", 1);
+
+        CityMapLib::DijkstraPathFinder f(c);
+        REQUIRE(f.hasPathToAll("0"));
+    }
+
+    SECTION("City with isolated crossroad") {
+        CityMapLib::City c;
+        c.addCrossroad("0");
+        c.addCrossroad("1");
+        c.addCrossroad("2");
+        c.addCrossroad("3");
+
+        c.addRoad("0", "1", 1);
+        c.addRoad("1", "2", 1);
+        c.addRoad("2", "0", 1);
+
+        CityMapLib::DijkstraPathFinder f(c);
+        REQUIRE_FALSE(f.hasPathToAll("2"));
+    }
+
+    SECTION("City with single but not strongly connected component") {
+        CityMapLib::City c;
+        c.addCrossroad("0");
+        c.addCrossroad("1");
+        c.addCrossroad("2");
+
+        c.addRoad("0", "1", 1);
+        c.addRoad("0", "2", 1);
+
+        CityMapLib::DijkstraPathFinder f(c);
+        REQUIRE(f.hasPathToAll("0"));
+
+        REQUIRE_FALSE(f.hasPathToAll("1"));
+        REQUIRE_FALSE(f.hasPathToAll("2"));
+    }
+}

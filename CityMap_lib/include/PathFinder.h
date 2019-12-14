@@ -13,6 +13,8 @@ namespace CityMapLib {
     public:
         [[nodiscard]] virtual bool hasPath(const std::string &from, const std::string &to) const = 0;
 
+        [[nodiscard]] virtual bool hasPathToAll(const std::string &start) const = 0;
+
         [[nodiscard]] virtual std::vector<Path>
         findBestPaths(const std::string &from, const std::string &to, unsigned int pathsCount) const = 0;
     };

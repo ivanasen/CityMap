@@ -3,5 +3,5 @@ project(CityMap_lib_tests)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(CityMap_tests_run CrossroadTests.cpp CityTests.cpp DijkstraPathFinderTests.cpp DeadEndFinderTests.cpp EulerTourFinderTests.cpp)
+add_executable(CityMap_tests_run CrossroadTests.cpp CityTests.cpp DijkstraPathFinderTests.cpp DeadEndFinderTests.cpp EulerCircuitFinderTests.cpp)
 target_link_libraries(CityMap_tests_run CityMap_lib)

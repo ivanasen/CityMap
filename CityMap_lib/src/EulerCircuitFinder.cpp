@@ -1,9 +1,11 @@
-#include "EulerTourFinder.h"
+#include "EulerCircuitFinder.h"
+#include "GraphUtilities.h"
 #include <stack>
+#include <algorithm>
 
 namespace CityMapLib {
 
-    bool EulerTourFinder::hasEulerTour(const City &city) {
+    bool EulerCircuitFinder::hasEulerCircuit(const City &city) {
         if (!isStronglyConnected(city))
             return false;
 
@@ -18,16 +20,49 @@ namespace CityMapLib {
         return true;
     }
 
-    std::vector<CrossroadPtr> EulerTourFinder::findEulerTour(const City &city) {
-        if (!hasEulerTour(city)) {
-            throw std::invalid_argument("The city doesn't have a valid Euler tour.");
+    std::vector<CrossroadPtr> EulerCircuitFinder::findEulerCircuit(const City &city) {
+        if (!hasEulerCircuit(city)) {
+            throw std::invalid_argument("The city doesn't have a valid Euler circuit.");
         }
 
+        const std::vector<CrossroadPtr> &crossroads = city.getCrossroads();
 
-        return {};
+        std::unordered_map<CrossroadPtr, std::vector<Road>> edgeCount;
+        for (const CrossroadPtr &c : crossroads) {
+            edgeCount[c] = c->getOutgoingRoads();
+        }
+
+        std::stack<CrossroadPtr> currPath;
+        std::vector<CrossroadPtr> circuit;
+
+        CrossroadPtr currNode = findConnectedNode(crossroads);
+
+        if (!currNode)
+            return circuit;
+
+        currPath.push(currNode);
+
+        while (!currPath.empty()) {
+            if (!edgeCount[currNode].empty()) {
+                currPath.push(currNode);
+
+                Road nextRoad = edgeCount[currNode].back();
+                edgeCount[currNode].pop_back();
+                currNode = nextRoad.getCrossroad().lock();
+            } else {
+                circuit.push_back(currNode);
+
+                currNode = currPath.top();
+                currPath.pop();
+            }
+        }
+
+        std::reverse(circuit.begin(), circuit.end());
+
+        return circuit;
     }
 
-    City EulerTourFinder::getTransposeCity(const City &city) {
+    City EulerCircuitFinder::getTransposeCity(const City &city) {
         City transpose;
 
         const std::vector<CrossroadPtr> &crossroads = city.getCrossroads();
@@ -50,7 +85,7 @@ namespace CityMapLib {
     // Checks if each node in the city with a degree bigger than 0
     // belongs to the same strongly connected component
     // Uses Kosajaru's DFS based algorithm
-    bool EulerTourFinder::isStronglyConnected(const City &city) {
+    bool EulerCircuitFinder::isStronglyConnected(const City &city) {
         const std::vector<CrossroadPtr> &crossroads = city.getCrossroads();
 
         if (crossroads.empty())
@@ -58,14 +93,7 @@ namespace CityMapLib {
 
         std::vector<bool> visited(crossroads.size());
 
-        CrossroadPtr startNode;
-        for (const CrossroadPtr &c : crossroads) {
-            if (!c->getOutgoingRoads().empty()) {
-                startNode = c;
-                break;
-            }
-        }
-
+        CrossroadPtr startNode = findConnectedNode(crossroads);
         if (startNode == nullptr)
             return true;
 
@@ -93,23 +121,13 @@ namespace CityMapLib {
         return true;
     }
 
-    void EulerTourFinder::dfsUtil(std::vector<bool> &visited, const CrossroadPtr &c) {
-        std::stack<CrossroadPtr> s;
-        s.push(c);
-
-        while (!s.empty()) {
-            CrossroadPtr top = s.top();
-            s.pop();
-
-            visited[top->getId()] = true;
-
-            for (const Road &road : top->getOutgoingRoads()) {
-                CrossroadPtr crossroad = road.getCrossroad().lock();
-                if (!visited[crossroad->getId()]) {
-                    s.push(crossroad);
-                }
+    CrossroadPtr EulerCircuitFinder::findConnectedNode(const std::vector<CrossroadPtr> &crossroads) {
+        for (const CrossroadPtr &c : crossroads) {
+            if (!c->getOutgoingRoads().empty()) {
+                return c;
             }
         }
+        return nullptr;
     }
 
 }
