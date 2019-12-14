@@ -1,11 +1,12 @@
-#include "EulerCircuitFinder.h"
+#include "CircuitFinder.h"
 #include "GraphUtilities.h"
 #include <stack>
 #include <algorithm>
 
 namespace CityMapLib {
 
-    bool EulerCircuitFinder::hasEulerCircuit(const City &city) {
+
+    bool CircuitFinder::hasEulerCircuit(const City &city) {
         if (!isStronglyConnected(city))
             return false;
 
@@ -20,7 +21,7 @@ namespace CityMapLib {
         return true;
     }
 
-    std::vector<CrossroadPtr> EulerCircuitFinder::findEulerCircuit(const City &city) {
+    std::vector<CrossroadPtr> CircuitFinder::findEulerCircuit(const City &city) {
         if (!hasEulerCircuit(city)) {
             throw std::invalid_argument("The city doesn't have a valid Euler circuit.");
         }
@@ -62,7 +63,7 @@ namespace CityMapLib {
         return circuit;
     }
 
-    City EulerCircuitFinder::getTransposeCity(const City &city) {
+    City CircuitFinder::getTransposeCity(const City &city) {
         City transpose;
 
         const std::vector<CrossroadPtr> &crossroads = city.getCrossroads();
@@ -85,7 +86,7 @@ namespace CityMapLib {
     // Checks if each node in the city with a degree bigger than 0
     // belongs to the same strongly connected component
     // Uses Kosajaru's DFS based algorithm
-    bool EulerCircuitFinder::isStronglyConnected(const City &city) {
+    bool CircuitFinder::isStronglyConnected(const City &city) {
         const std::vector<CrossroadPtr> &crossroads = city.getCrossroads();
 
         if (crossroads.empty())
@@ -121,13 +122,39 @@ namespace CityMapLib {
         return true;
     }
 
-    CrossroadPtr EulerCircuitFinder::findConnectedNode(const std::vector<CrossroadPtr> &crossroads) {
+    CrossroadPtr CircuitFinder::findConnectedNode(const std::vector<CrossroadPtr> &crossroads) {
         for (const CrossroadPtr &c : crossroads) {
             if (!c->getOutgoingRoads().empty()) {
                 return c;
             }
         }
         return nullptr;
+    }
+
+    bool CircuitFinder::hasCircuit(const City &city, const std::string &startName) {
+        CrossroadPtr startNode = city.getCrossroadByName(startName);
+        const std::vector<Road> &children = startNode->getOutgoingRoads();
+
+        if (children.empty()) {
+            return false;
+        }
+
+        const std::vector<CrossroadPtr> &crossroads = city.getCrossroads();
+
+        std::vector<bool> visited(crossroads.size());
+        for (const Road &road : children) {
+            CrossroadPtr c = road.getCrossroad().lock();
+
+            if (!visited[c->getId()]) {
+                dfsUtil(visited, c);
+
+                if (visited[startNode->getId()]) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
 }

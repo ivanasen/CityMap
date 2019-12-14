@@ -1,13 +1,15 @@
-#ifndef CITYMAP_EULERCIRCUITFINDER_H
-#define CITYMAP_EULERCIRCUITFINDER_H
+#ifndef CITYMAP_CIRCUITFINDER_H
+#define CITYMAP_CIRCUITFINDER_H
 
 #include <vector>
 #include "City.h"
 
 namespace CityMapLib {
 
-    class EulerCircuitFinder {
+    class CircuitFinder {
     public:
+        static bool hasCircuit(const City& city, const std::string &startName);
+
         static bool hasEulerCircuit(const City &city);
 
         static std::vector<CrossroadPtr> findEulerCircuit(const City &city);
@@ -22,4 +24,4 @@ namespace CityMapLib {
 
 }
 
-#endif //CITYMAP_EULERCIRCUITFINDER_H
+#endif //CITYMAP_CIRCUITFINDER_H
