@@ -9,6 +9,6 @@ include_directories(include/)
 
 add_library(CityMap_serialization STATIC ${SOURCE_FILES})
 
-target_link_libraries(CityMap_serialization PRIVATE CityMap_lib)
+target_link_libraries(CityMap_serialization PRIVATE CityMap_lib CityMap_utils)
 
 target_include_directories(CityMap_serialization PUBLIC include/)

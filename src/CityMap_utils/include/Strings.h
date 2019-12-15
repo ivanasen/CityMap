@@ -1,11 +1,10 @@
-#ifndef STRINGS_H
-#define STRINGS_H
+#pragma once
 
 #include <string>
 #include <vector>
 #include <unordered_set>
 
-namespace CityMap::Serialization {
+namespace CityMap::Utils {
 
     class Strings {
     public:
@@ -20,6 +19,8 @@ namespace CityMap::Serialization {
         static std::vector<std::string> split(const std::string &string, char separator);
 
         static bool isInteger(const std::string &s);
+
+        static bool isDecimal(const std::string &s);
 
         static std::string toLowerCase(std::string string);
 
@@ -45,5 +46,3 @@ namespace CityMap::Serialization {
     };
 
 }
-
-#endif // STRINGS_H

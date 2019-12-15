@@ -89,7 +89,7 @@ namespace CityMap::Serialization {
             } else if (!isspace(currentChar)) {
                 std::string element = extractNextElement(serialized, i);
 
-                if (Strings::isInteger(element)) {
+                if (Utils::Strings::isInteger(element)) {
                     tokens.emplace_back(TokenType::NUMBER, element);
                 } else {
                     tokens.emplace_back(TokenType::ELEMENT, element);

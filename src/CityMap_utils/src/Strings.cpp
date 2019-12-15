@@ -4,7 +4,7 @@
 #include <iomanip>
 #include "Strings.h"
 
-namespace CityMap::Serialization {
+namespace CityMap::Utils {
 
     const std::unordered_set<char> Strings::ESCAPE_CHARS = {
             '"', '\\', '\n', '\t'
@@ -89,6 +89,27 @@ namespace CityMap::Serialization {
 
         for (char c : trimmed) {
             if (!std::isdigit(c)) {
+                return false;
+            }
+        }
+        return !trimmed.empty();
+    }
+
+    bool Strings::isDecimal(const std::string &s) {
+        std::string trimmed = s;
+        trim(trimmed);
+
+        char decimalSeparator = '.';
+        bool foundDecimalSeparator = false;
+        for (char c : trimmed) {
+            if (std::isdigit(c)) {
+                continue;
+            } else if (c == decimalSeparator) {
+                if (foundDecimalSeparator) {
+                    return false;
+                }
+                foundDecimalSeparator = true;
+            } else {
                 return false;
             }
         }

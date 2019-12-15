@@ -4,7 +4,7 @@
 #include <random>
 #include <City.h>
 #include <TextMapFormatter.h>
-#include <Strings.h>
+#include "Strings.h"
 
 namespace CityMap::Serialization::Tests {
 
@@ -152,8 +152,8 @@ namespace CityMap::Serialization::Tests {
             Lib::City deserialized = formatter.deserialize(expected);
 
             std::vector<std::string> lines =
-                    Serialization::Strings::split(formatter.serialize(deserialized), '\n');
-            std::vector<std::string> expectedLines = Serialization::Strings::split(expected, '\n');
+                    Utils::Strings::split(formatter.serialize(deserialized), '\n');
+            std::vector<std::string> expectedLines = Utils::Strings::split(expected, '\n');
 
             std::unordered_set<std::string> linesSet;
             for (const std::string &s : lines) {
