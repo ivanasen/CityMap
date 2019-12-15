@@ -7,6 +7,6 @@ file(GLOB SOURCE_FILES "src/*.cpp")
 
 include_directories(include/)
 
-add_library(CityMap_lib STATIC ${SOURCE_FILES} src/GraphUtilities.h src/GraphUtilites.cpp)
+add_library(CityMap_lib STATIC ${SOURCE_FILES})
 
 target_include_directories(CityMap_lib PUBLIC include/)

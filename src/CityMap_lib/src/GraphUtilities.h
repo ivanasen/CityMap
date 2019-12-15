@@ -2,7 +2,7 @@
 #define CITYMAP_GRAPHUTILITIES_H
 
 #include <vector>
-#include <include/City.h>
+#include "City.h"
 
 namespace CityMapLib {
     void dfsUtil(std::vector<bool> &visited, const CrossroadPtr &c);

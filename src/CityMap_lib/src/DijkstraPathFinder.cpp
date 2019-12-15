@@ -1,5 +1,5 @@
 #include <queue>
-#include <include/DeadEndFinder.h>
+#include "DeadEndFinder.h"
 #include "DijkstraPathFinder.h"
 #include "GraphUtilities.h"
 

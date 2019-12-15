@@ -3,7 +3,9 @@ project(CityMap)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(CityMap_lib)
+add_subdirectory(lib/Catch)
 
-add_subdirectory(CityMap_lib)
-add_subdirectory(CityMap_lib_tests)
+add_subdirectory(src/CityMap_lib)
+add_subdirectory(src/CityMap_cli)
+
+add_subdirectory(tests/CityMap_lib_tests)
