@@ -3,7 +3,7 @@
 #include "DijkstraPathFinder.h"
 #include "GraphUtilities.h"
 
-namespace CityMapLib {
+namespace CityMap::Lib {
 
     DijkstraPathFinder::DijkstraPathFinder(const City &city) : city(city) {
     }
@@ -99,4 +99,5 @@ namespace CityMapLib {
 
         return true;
     }
+
 }

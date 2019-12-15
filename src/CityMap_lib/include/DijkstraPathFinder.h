@@ -6,7 +6,7 @@
 #include "PathFinder.h"
 #include "City.h"
 
-namespace CityMapLib {
+namespace CityMap::Lib {
 
     class DijkstraPathFinder : public PathFinder {
     private:
@@ -25,5 +25,6 @@ namespace CityMapLib {
     };
 
 }
+
 
 #endif //CITYMAP_DIJKSTRAPATHFINDER_H

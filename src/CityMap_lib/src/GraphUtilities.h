@@ -4,8 +4,10 @@
 #include <vector>
 #include "City.h"
 
-namespace CityMapLib {
+namespace CityMap::Lib {
+
     void dfsUtil(std::vector<bool> &visited, const CrossroadPtr &c);
+
 }
 
 #endif //CITYMAP_GRAPHUTILITIES_H

@@ -5,7 +5,7 @@
 #include "City.h"
 #include "Crossroad.h"
 
-namespace CityMapLib {
+namespace CityMap::Lib {
 
     class Path {
     private:
@@ -29,6 +29,7 @@ namespace CityMapLib {
             }
         };
     };
+
 }
 
 #endif //CITYMAP_PATH_H

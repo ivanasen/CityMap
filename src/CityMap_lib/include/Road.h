@@ -5,7 +5,7 @@
 #include <utility>
 #include "Crossroad.h"
 
-namespace CityMapLib {
+namespace CityMap::Lib {
 
     class Crossroad;
 
@@ -19,11 +19,12 @@ namespace CityMapLib {
 
         bool operator==(const Road &other) const;
 
+        bool operator!=(const Road &other) const;
+
         [[nodiscard]] int getWeight() const;
 
         [[nodiscard]] const std::weak_ptr<Crossroad> &getCrossroad() const;
     };
-
 }
 
 #endif //CITYMAP_ROAD_H

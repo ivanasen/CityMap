@@ -1,7 +1,8 @@
 #include <stack>
 #include "GraphUtilities.h"
 
-namespace CityMapLib {
+namespace CityMap::Lib {
+
     void dfsUtil(std::vector<bool> &visited, const CrossroadPtr &c) {
         std::stack<CrossroadPtr> s;
         s.push(c);
@@ -20,4 +21,5 @@ namespace CityMapLib {
             }
         }
     }
+
 }

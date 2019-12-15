@@ -1,7 +1,7 @@
 #include <utility>
 #include "Crossroad.h"
 
-namespace CityMapLib {
+namespace CityMap::Lib {
 
     Crossroad::Crossroad(int id, std::string name) : id(id), name(std::move(name)) {
     }
@@ -54,6 +54,10 @@ namespace CityMapLib {
         return id == other.getId();
     }
 
+    bool Crossroad::operator!=(const Crossroad &other) const {
+        return !(*this == other);
+    }
+
     void Crossroad::setBlocked(bool isBlocked) {
         blocked = isBlocked;
     }
@@ -69,4 +73,5 @@ namespace CityMapLib {
     const std::vector<Road> &Crossroad::getIncomingRoads() const {
         return incomingRoads;
     }
+
 }

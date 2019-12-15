@@ -3,8 +3,7 @@
 #include <stack>
 #include <algorithm>
 
-namespace CityMapLib {
-
+namespace CityMap::Lib {
 
     bool CircuitFinder::hasEulerCircuit(const City &city) {
         if (!isStronglyConnected(city))

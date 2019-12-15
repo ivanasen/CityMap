@@ -7,5 +7,6 @@ add_subdirectory(lib/Catch)
 
 add_subdirectory(src/CityMap_lib)
 add_subdirectory(src/CityMap_cli)
+add_subdirectory(src/CityMap_serialization)
 
-add_subdirectory(tests/CityMap_lib_tests)
+add_subdirectory(tests)

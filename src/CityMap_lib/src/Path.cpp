@@ -2,7 +2,7 @@
 
 #include "Path.h"
 
-namespace CityMapLib {
+namespace CityMap::Lib {
 
     Path::Path(std::vector<CrossroadPtr> path, int distance)
             : path(std::move(path)), distance(distance) {

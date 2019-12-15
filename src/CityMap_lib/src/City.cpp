@@ -2,7 +2,7 @@
 
 #include <memory>
 
-namespace CityMapLib {
+namespace CityMap::Lib {
 
     void City::addCrossroad(const std::string &crossroad) {
         if (crossroadIndexes.find(crossroad) != crossroadIndexes.end())
@@ -14,6 +14,14 @@ namespace CityMapLib {
     }
 
     void City::addRoad(const std::string &from, const std::string &to, int weight) {
+        if (crossroadIndexes.find(from) == crossroadIndexes.end()) {
+            addCrossroad(from);
+        }
+
+        if (crossroadIndexes.find(to) == crossroadIndexes.end()) {
+            addCrossroad(to);
+        }
+
         CrossroadPtr fromPtr = getCrossroadByName(from);
         CrossroadPtr toPtr = getCrossroadByName(to);
         fromPtr->addRoadTo(toPtr, weight);
@@ -32,9 +40,11 @@ namespace CityMapLib {
 
     CrossroadPtr City::getCrossroadByName(const std::string &name) const {
         auto iter = crossroadIndexes.find(name);
-        if (iter == crossroadIndexes.end())
-            throw std::invalid_argument("Crossroad with name \"" + name + "\" does not exist in this city.");
+        if (iter == crossroadIndexes.end()) {
+            return nullptr;
+        }
 
         return crossroads[iter->second];
     }
+
 }

@@ -1,0 +1,10 @@
+#ifndef CITYMAP_TOKENTYPE_H
+#define CITYMAP_TOKENTYPE_H
+
+enum class TokenType {
+    LINE_SEPARATOR,
+    ELEMENT,
+    NUMBER
+};
+
+#endif //CITYMAP_TOKENTYPE_H

@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include "Road.h"
 
-namespace CityMapLib {
+namespace CityMap::Lib {
 
     class Road;
 
@@ -35,6 +35,8 @@ namespace CityMapLib {
         [[nodiscard]] int getId() const;
 
         bool operator==(const Crossroad &other) const;
+
+        bool operator!=(const Crossroad &other) const;
 
     private:
         const int id;
