@@ -3,19 +3,21 @@
 
 #include <vector>
 #include <City.h>
+#include <DijkstraPathFinder.h>
 #include "core/Cli.h"
 
 namespace CityMap::Cli {
 
+    // TODO: Add project bonus commands: location, change, neighbours, move, closed,
     class CityMapCli : public Cli {
     private:
+        static const int SHORTEST_PATHS_COUNT;
+
         Lib::City city;
+        Lib::DijkstraPathFinder pathFinder;
 
     public:
         CityMapCli(std::ostream &ostream, std::istream &istream);
-
-    protected:
-        void onExit() override;
 
     private:
         void configureCommands();

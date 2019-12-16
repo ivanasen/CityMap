@@ -58,16 +58,16 @@ namespace CityMap::Lib {
         return !(*this == other);
     }
 
-    void Crossroad::setBlocked(bool isBlocked) {
-        blocked = isBlocked;
+    void Crossroad::setClosed(bool isClosed) {
+        closed = isClosed;
     }
 
     int Crossroad::getId() const {
         return id;
     }
 
-    bool Crossroad::isBlocked() const {
-        return blocked;
+    bool Crossroad::isClosed() const {
+        return closed;
     }
 
     const std::vector<Road> &Crossroad::getIncomingRoads() const {

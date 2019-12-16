@@ -16,7 +16,7 @@ namespace CityMap::Lib {
         [[nodiscard]] virtual bool hasPathToAll(const std::string &start) const = 0;
 
         [[nodiscard]] virtual std::vector<Path>
-        findBestPaths(const std::string &from, const std::string &to, unsigned int pathsCount) const = 0;
+        findShortestPaths(const std::string &from, const std::string &to, unsigned int pathsCount) const = 0;
     };
 
 }

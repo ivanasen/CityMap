@@ -1,29 +1,29 @@
 #include "City.h"
-#include "CircuitFinder.h"
+#include "CycleFinder.h"
 #include "catch.hpp"
 
 namespace CityMap::Lib::Tests {
 
-    TEST_CASE("hasEulerCircuit returns true for an empty city", "[CircuitFinder]") {
+    TEST_CASE("hasEulerCycle returns true for an empty city", "[CycleFinder]") {
         City c;
-        REQUIRE(CircuitFinder::hasEulerCircuit(c));
+        REQUIRE(CycleFinder::hasEulerCycle(c));
     }
 
-    TEST_CASE("hasEulerCircuit returns true for a city with only one crossroad", "[CircuitFinder]") {
+    TEST_CASE("hasEulerCycle returns true for a city with only one crossroad", "[CycleFinder]") {
         City c;
         c.addCrossroad("0");
-        REQUIRE(CircuitFinder::hasEulerCircuit(c));
+        REQUIRE(CycleFinder::hasEulerCycle(c));
     }
 
-    TEST_CASE("hasEulerCircuit returns false on a case with two crossroads with one road", "[CircuitFinder]") {
+    TEST_CASE("hasEulerCycle returns false on a case with two crossroads with one road", "[CycleFinder]") {
         City c;
         c.addCrossroad("0");
         c.addCrossroad("1");
         c.addRoad("0", "1", 1);
-        REQUIRE_FALSE(CircuitFinder::hasEulerCircuit(c));
+        REQUIRE_FALSE(CycleFinder::hasEulerCycle(c));
     }
 
-    TEST_CASE("hasEulerCircuit returns true for simple cycle with 3 crossroads", "[CircuitFinder]") {
+    TEST_CASE("hasEulerCycle returns true for simple cycle with 3 crossroads", "[CycleFinder]") {
         City c;
         c.addCrossroad("0");
         c.addCrossroad("1");
@@ -31,10 +31,10 @@ namespace CityMap::Lib::Tests {
         c.addRoad("0", "1", 1);
         c.addRoad("1", "2", 1);
         c.addRoad("2", "0", 1);
-        REQUIRE(CircuitFinder::hasEulerCircuit(c));
+        REQUIRE(CycleFinder::hasEulerCycle(c));
     }
 
-    TEST_CASE("hasEulerCircuit returns true on an Euler city", "[CircuitFinder]") {
+    TEST_CASE("hasEulerCycle returns true on an Euler city", "[CycleFinder]") {
         City c;
         c.addCrossroad("0");
         c.addCrossroad("1");
@@ -49,10 +49,10 @@ namespace CityMap::Lib::Tests {
         c.addRoad("3", "4", 1);
         c.addRoad("4", "0", 1);
 
-        REQUIRE(CircuitFinder::hasEulerCircuit(c));
+        REQUIRE(CycleFinder::hasEulerCycle(c));
     }
 
-    TEST_CASE("hasEulerCircuit returns false on euler components which aren't connected", "[CircuitFinder]") {
+    TEST_CASE("hasEulerCycle returns false on euler components which aren't connected", "[CycleFinder]") {
         City c;
         c.addCrossroad("0");
         c.addCrossroad("1");
@@ -68,10 +68,10 @@ namespace CityMap::Lib::Tests {
         c.addRoad("4", "5", 1);
         c.addRoad("5", "3", 1);
 
-        REQUIRE_FALSE(CircuitFinder::hasEulerCircuit(c));
+        REQUIRE_FALSE(CycleFinder::hasEulerCycle(c));
     }
 
-    TEST_CASE("hasEulerCircuit returns false on an non-Euler city", "[CircuitFinder]") {
+    TEST_CASE("hasEulerCycle returns false on an non-Euler city", "[CycleFinder]") {
         City c;
         c.addCrossroad("0");
         c.addCrossroad("1");
@@ -82,18 +82,18 @@ namespace CityMap::Lib::Tests {
         c.addRoad("1", "2", 1);
         c.addRoad("2", "3", 1);
 
-        REQUIRE_FALSE(CircuitFinder::hasEulerCircuit(c));
+        REQUIRE_FALSE(CycleFinder::hasEulerCycle(c));
     }
 
-    TEST_CASE("findEulerCircuit works on empty city", "[CircuitFinder]") {
+    TEST_CASE("findEulerCycle works on empty city", "[CycleFinder]") {
         City c;
         std::vector<CrossroadPtr> expected;
-        std::vector<CrossroadPtr> circuit = CircuitFinder::findEulerCircuit(c);
+        std::vector<CrossroadPtr> circuit = CycleFinder::findEulerCycle(c);
 
         REQUIRE(circuit == expected);
     }
 
-    TEST_CASE("findEulerCircuit returns correct circuit", "[CircuitFinder]") {
+    TEST_CASE("findEulerCycle returns correct circuit", "[CycleFinder]") {
         City c;
         c.addCrossroad("0");
         c.addCrossroad("1");
@@ -107,12 +107,12 @@ namespace CityMap::Lib::Tests {
         CrossroadPtr c2 = c.getCrossroadByName("2");
 
         std::vector<CrossroadPtr> expectedCircuit{c0, c1, c2, c0};
-        std::vector<CrossroadPtr> circuit = CircuitFinder::findEulerCircuit(c);
+        std::vector<CrossroadPtr> circuit = CycleFinder::findEulerCycle(c);
 
         REQUIRE(circuit == expectedCircuit);
     }
 
-    TEST_CASE("findEulerCircuit returns correct circuit on a bigger city", "[CircuitFinder]") {
+    TEST_CASE("findEulerCycle returns correct circuit on a bigger city", "[CycleFinder]") {
         SECTION("Single strongly-connected component case") {
             City c;
             c.addCrossroad("0");
@@ -137,7 +137,7 @@ namespace CityMap::Lib::Tests {
                     c.getCrossroadByName("4"),
                     c.getCrossroadByName("0"),
             };
-            std::vector<CrossroadPtr> circuit = CircuitFinder::findEulerCircuit(c);
+            std::vector<CrossroadPtr> circuit = CycleFinder::findEulerCycle(c);
 
             REQUIRE(circuit == expectedCircuit);
         }
@@ -167,17 +167,17 @@ namespace CityMap::Lib::Tests {
                     c.getCrossroadByName("2"),
                     c.getCrossroadByName("0"),
             };
-            std::vector<CrossroadPtr> circuit = CircuitFinder::findEulerCircuit(c);
+            std::vector<CrossroadPtr> circuit = CycleFinder::findEulerCycle(c);
 
             REQUIRE(circuit == expectedCircuit);
         }
     }
 
-    TEST_CASE("hasCircuit works", "[CircuitFinder]") {
+    TEST_CASE("hasCycle works", "[CycleFinder]") {
         SECTION("Returns false on single crossroad city") {
             City c;
             c.addCrossroad("test");
-            REQUIRE_FALSE(CircuitFinder::hasCircuit(c, "test"));
+            REQUIRE_FALSE(CycleFinder::hasCycle(c, "test"));
         }
 
         SECTION("Returns false on single road city") {
@@ -187,7 +187,7 @@ namespace CityMap::Lib::Tests {
 
             c.addRoad("0", "1", 1);
 
-            REQUIRE_FALSE(CircuitFinder::hasCircuit(c, "0"));
+            REQUIRE_FALSE(CycleFinder::hasCycle(c, "0"));
         }
 
         SECTION("Returns true on city with 2 crossroads and circuit") {
@@ -198,7 +198,7 @@ namespace CityMap::Lib::Tests {
             c.addRoad("0", "1", 1);
             c.addRoad("1", "0", 1);
 
-            REQUIRE(CircuitFinder::hasCircuit(c, "0"));
+            REQUIRE(CycleFinder::hasCycle(c, "0"));
         }
 
         SECTION("Returns true on city with 3 crossroads and circuit") {
@@ -211,7 +211,7 @@ namespace CityMap::Lib::Tests {
             c.addRoad("1", "2", 1);
             c.addRoad("2", "0", 1);
 
-            REQUIRE(CircuitFinder::hasCircuit(c, "2"));
+            REQUIRE(CycleFinder::hasCycle(c, "2"));
         }
 
         SECTION("Works on city with more crossroads") {
@@ -228,8 +228,8 @@ namespace CityMap::Lib::Tests {
             c.addRoad("3", "0", 1);
             c.addRoad("3", "4", 1);
 
-            REQUIRE(CircuitFinder::hasCircuit(c, "0"));
-            REQUIRE_FALSE(CircuitFinder::hasCircuit(c, "4"));
+            REQUIRE(CycleFinder::hasCycle(c, "0"));
+            REQUIRE_FALSE(CycleFinder::hasCycle(c, "4"));
         }
 
         SECTION("Works on city with the form of a tree") {
@@ -246,7 +246,7 @@ namespace CityMap::Lib::Tests {
             city.addRoad("1", "4", 1);
 
             for (const CrossroadPtr &c : city.getCrossroads()) {
-                REQUIRE_FALSE(CircuitFinder::hasCircuit(city, c->getName()));
+                REQUIRE_FALSE(CycleFinder::hasCycle(city, c->getName()));
             }
         }
 

@@ -22,9 +22,9 @@ namespace CityMap::Lib {
 
         bool removeRoadFrom(const std::weak_ptr<Crossroad> &crossroad);
 
-        void setBlocked(bool isBlocked);
+        void setClosed(bool isClosed);
 
-        [[nodiscard]] bool isBlocked() const;
+        [[nodiscard]] bool isClosed() const;
 
         [[nodiscard]] std::string getName() const;
 
@@ -43,7 +43,7 @@ namespace CityMap::Lib {
         const std::string name;
         std::vector<Road> outgoingRoads;
         std::vector<Road> incomingRoads;
-        bool blocked = false;
+        bool closed = false;
     };
 }
 

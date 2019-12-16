@@ -59,7 +59,8 @@ namespace CityMap::Cli {
         const std::unordered_map<std::string, std::function<void(const std::vector<std::string>)>> &getCommands() const;
 
         void setCommands(
-                const std::unordered_map<std::string, std::function<void(const std::vector<std::string>)>> &newCommands);
+                const std::unordered_map<std::string, std::function<void(
+                        const std::vector<std::string>)>> &newCommands);
 
     private:
         static std::vector<std::string> separateInput(const std::string &input);

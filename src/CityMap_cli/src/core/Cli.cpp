@@ -101,7 +101,7 @@ namespace CityMap::Cli {
 
     std::vector<std::string> Cli::separateInput(const std::string &input) {
         std::string trimmed = Utils::Strings::trim(input);
-        std::vector<std::string> separatedInput = Utils::Strings::splitBySpaces(input, 2);
+        std::vector<std::string> separatedInput = Utils::Strings::splitBySpaces(input);
         return separatedInput;
     }
 
@@ -116,7 +116,6 @@ namespace CityMap::Cli {
     }
 
     void Cli::onExit() {
-
     }
 
 }

@@ -13,6 +13,14 @@ namespace CityMap::Lib {
         CrossroadPtr toPtr = city.getCrossroadByName(to);
         std::vector<CrossroadPtr> crossroads = city.getCrossroads();
 
+        if (!fromPtr) {
+            throw std::invalid_argument("Crossroad doesn't exist: " + from);
+        }
+
+        if (!toPtr) {
+            throw std::invalid_argument("Crossroad doesn't exist: " + to);
+        }
+
         std::vector<bool> visited(crossroads.size());
         std::queue<int> q;
 
@@ -38,7 +46,7 @@ namespace CityMap::Lib {
         return false;
     }
 
-    std::vector<Path> DijkstraPathFinder::findBestPaths(
+    std::vector<Path> DijkstraPathFinder::findShortestPaths(
             const std::string &from,
             const std::string &to,
             unsigned int pathsCount) const {
@@ -50,7 +58,7 @@ namespace CityMap::Lib {
 
         std::vector<Path> bestPaths;
 
-        if (fromPtr->isBlocked() || toPtr->isBlocked())
+        if (fromPtr->isClosed() || toPtr->isClosed())
             return bestPaths;
 
         std::priority_queue<Path, std::vector<Path>, Path::DistanceComparator> q;
@@ -72,7 +80,7 @@ namespace CityMap::Lib {
                 for (const Road &p : currentCrossroad->getOutgoingRoads()) {
                     const std::weak_ptr<Crossroad> &weakPtr = p.getCrossroad();
                     if (CrossroadPtr crossroad = weakPtr.lock()) {
-                        if (!(crossroad->isBlocked())) {
+                        if (!(crossroad->isClosed())) {
                             Path newPath = current.addToPath(p);
                             q.push(newPath);
                         }

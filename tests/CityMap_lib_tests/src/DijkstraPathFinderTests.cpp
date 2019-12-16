@@ -32,7 +32,7 @@ namespace CityMap::Lib::Tests {
         REQUIRE_FALSE(finder.hasPath("3", "4"));
     }
 
-    TEST_CASE("findBestPaths works correctly when there is no loop", "[DijkstraPathFinder]") {
+    TEST_CASE("findShortestPaths works correctly when there is no loop", "[DijkstraPathFinder]") {
         City c;
         c.addCrossroad("0");
         c.addCrossroad("1");
@@ -46,7 +46,7 @@ namespace CityMap::Lib::Tests {
 
         DijkstraPathFinder finder(c);
 
-        std::vector<Path> bestPaths = finder.findBestPaths("0", "3", 2);
+        std::vector<Path> bestPaths = finder.findShortestPaths("0", "3", 2);
 
         CrossroadPtr cross0 = c.getCrossroadByName("0");
         CrossroadPtr cross1 = c.getCrossroadByName("1");
@@ -57,7 +57,7 @@ namespace CityMap::Lib::Tests {
         REQUIRE(bestPaths[1] == Path({cross0, cross1, cross3}, 9));
     }
 
-    TEST_CASE("findBestPaths works when there is a loop", "[DijkstraPathFinder]") {
+    TEST_CASE("findShortestPaths works when there is a loop", "[DijkstraPathFinder]") {
         City c;
         c.addCrossroad("0");
         c.addCrossroad("1");
@@ -69,7 +69,7 @@ namespace CityMap::Lib::Tests {
 
         DijkstraPathFinder finder(c);
 
-        std::vector<Path> bestPaths = finder.findBestPaths("0", "2", 3);
+        std::vector<Path> bestPaths = finder.findShortestPaths("0", "2", 3);
 
         CrossroadPtr cross0 = c.getCrossroadByName("0");
         CrossroadPtr cross1 = c.getCrossroadByName("1");
@@ -80,7 +80,7 @@ namespace CityMap::Lib::Tests {
         REQUIRE(bestPaths[2] == Path({cross0, cross1, cross0, cross1, cross0, cross1, cross2}, 17));
     }
 
-    TEST_CASE("findBestPaths works when there are blocked crossroads", "[DijkstraPathFinder]") {
+    TEST_CASE("findShortestPaths works when there are closed crossroads", "[DijkstraPathFinder]") {
         City c;
         c.addCrossroad("0");
         c.addCrossroad("1");
@@ -89,17 +89,17 @@ namespace CityMap::Lib::Tests {
         c.addRoad("0", "1", 1);
         c.addRoad("1", "2", 1);
 
-        c.getCrossroadByName("1")->setBlocked(true);
+        c.getCrossroadByName("1")->setClosed(true);
 
         DijkstraPathFinder finder(c);
 
-        std::vector<Path> bestPaths = finder.findBestPaths("0", "2", 1);
+        std::vector<Path> bestPaths = finder.findShortestPaths("0", "2", 1);
 
         REQUIRE(bestPaths.empty());
 
         c.addRoad("0", "2", 10);
 
-        std::vector<Path> bestPathsAfter = finder.findBestPaths("0", "2", 1);
+        std::vector<Path> bestPathsAfter = finder.findShortestPaths("0", "2", 1);
 
         CrossroadPtr cross0 = c.getCrossroadByName("0");
         CrossroadPtr cross2 = c.getCrossroadByName("2");

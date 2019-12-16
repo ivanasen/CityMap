@@ -1,11 +1,11 @@
-#include "CircuitFinder.h"
+#include "CycleFinder.h"
 #include "GraphUtilities.h"
 #include <stack>
 #include <algorithm>
 
 namespace CityMap::Lib {
 
-    bool CircuitFinder::hasEulerCircuit(const City &city) {
+    bool CycleFinder::hasEulerCycle(const City &city) {
         if (!isStronglyConnected(city))
             return false;
 
@@ -20,8 +20,8 @@ namespace CityMap::Lib {
         return true;
     }
 
-    std::vector<CrossroadPtr> CircuitFinder::findEulerCircuit(const City &city) {
-        if (!hasEulerCircuit(city)) {
+    std::vector<CrossroadPtr> CycleFinder::findEulerCycle(const City &city) {
+        if (!hasEulerCycle(city)) {
             throw std::invalid_argument("The city doesn't have a valid Euler circuit.");
         }
 
@@ -62,7 +62,7 @@ namespace CityMap::Lib {
         return circuit;
     }
 
-    City CircuitFinder::getTransposeCity(const City &city) {
+    City CycleFinder::getTransposeCity(const City &city) {
         City transpose;
 
         const std::vector<CrossroadPtr> &crossroads = city.getCrossroads();
@@ -85,7 +85,7 @@ namespace CityMap::Lib {
     // Checks if each node in the city with a degree bigger than 0
     // belongs to the same strongly connected component
     // Uses Kosajaru's DFS based algorithm
-    bool CircuitFinder::isStronglyConnected(const City &city) {
+    bool CycleFinder::isStronglyConnected(const City &city) {
         const std::vector<CrossroadPtr> &crossroads = city.getCrossroads();
 
         if (crossroads.empty())
@@ -121,7 +121,7 @@ namespace CityMap::Lib {
         return true;
     }
 
-    CrossroadPtr CircuitFinder::findConnectedNode(const std::vector<CrossroadPtr> &crossroads) {
+    CrossroadPtr CycleFinder::findConnectedNode(const std::vector<CrossroadPtr> &crossroads) {
         for (const CrossroadPtr &c : crossroads) {
             if (!c->getOutgoingRoads().empty()) {
                 return c;
@@ -130,7 +130,7 @@ namespace CityMap::Lib {
         return nullptr;
     }
 
-    bool CircuitFinder::hasCircuit(const City &city, const std::string &startName) {
+    bool CycleFinder::hasCycle(const City &city, const std::string &startName) {
         CrossroadPtr startNode = city.getCrossroadByName(startName);
         const std::vector<Road> &children = startNode->getOutgoingRoads();
 
