@@ -87,8 +87,8 @@ namespace citymap::lib::tests {
 
     TEST_CASE("findEulerCycle works on empty city", "[CycleFinder]") {
         City c;
-        std::vector<CrossroadPtr> expected;
-        std::vector<CrossroadPtr> circuit = CycleFinder::findEulerCycle(c);
+        Path expected({});
+        Path circuit = CycleFinder::findEulerCycle(c);
 
         REQUIRE(circuit == expected);
     }
@@ -106,8 +106,8 @@ namespace citymap::lib::tests {
         CrossroadPtr c1 = c.getCrossroadByName("1");
         CrossroadPtr c2 = c.getCrossroadByName("2");
 
-        std::vector<CrossroadPtr> expectedCircuit{c0, c1, c2, c0};
-        std::vector<CrossroadPtr> circuit = CycleFinder::findEulerCycle(c);
+        Path expectedCircuit({c0, c1, c2, c0});
+        Path circuit = CycleFinder::findEulerCycle(c);
 
         REQUIRE(circuit == expectedCircuit);
     }
@@ -128,16 +128,16 @@ namespace citymap::lib::tests {
             c.addRoad("3", "4", 1);
             c.addRoad("4", "0", 1);
 
-            std::vector<CrossroadPtr> expectedCircuit{
-                    c.getCrossroadByName("0"),
-                    c.getCrossroadByName("2"),
-                    c.getCrossroadByName("1"),
-                    c.getCrossroadByName("0"),
-                    c.getCrossroadByName("3"),
-                    c.getCrossroadByName("4"),
-                    c.getCrossroadByName("0"),
-            };
-            std::vector<CrossroadPtr> circuit = CycleFinder::findEulerCycle(c);
+            Path expectedCircuit({
+                                         c.getCrossroadByName("0"),
+                                         c.getCrossroadByName("2"),
+                                         c.getCrossroadByName("1"),
+                                         c.getCrossroadByName("0"),
+                                         c.getCrossroadByName("3"),
+                                         c.getCrossroadByName("4"),
+                                         c.getCrossroadByName("0"),
+                                 });
+            Path circuit = CycleFinder::findEulerCycle(c);
 
             REQUIRE(circuit == expectedCircuit);
         }
@@ -158,16 +158,16 @@ namespace citymap::lib::tests {
             c.addRoad("4", "2", 1);
             c.addRoad("2", "0", 1);
 
-            std::vector<CrossroadPtr> expectedCircuit{
-                    c.getCrossroadByName("0"),
-                    c.getCrossroadByName("1"),
-                    c.getCrossroadByName("2"),
-                    c.getCrossroadByName("3"),
-                    c.getCrossroadByName("4"),
-                    c.getCrossroadByName("2"),
-                    c.getCrossroadByName("0"),
-            };
-            std::vector<CrossroadPtr> circuit = CycleFinder::findEulerCycle(c);
+            Path expectedCircuit({
+                                         c.getCrossroadByName("0"),
+                                         c.getCrossroadByName("1"),
+                                         c.getCrossroadByName("2"),
+                                         c.getCrossroadByName("3"),
+                                         c.getCrossroadByName("4"),
+                                         c.getCrossroadByName("2"),
+                                         c.getCrossroadByName("0"),
+                                 });
+            Path circuit = CycleFinder::findEulerCycle(c);
 
             REQUIRE(circuit == expectedCircuit);
         }
