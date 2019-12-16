@@ -14,16 +14,16 @@ namespace citymap::cli {
         return currentFilePath.empty();
     }
 
-    lib::City &MapFileManager::getCity() {
+    std::shared_ptr<lib::City> MapFileManager::getCity() const {
         return city;
     }
 
-    lib::City &MapFileManager::createNew() {
-        city = lib::City();
+    std::shared_ptr<lib::City> MapFileManager::createNew() {
+        city = std::make_shared<lib::City>();;
         changesSaved = false;
     }
 
-    lib::City &MapFileManager::open(const std::string &filePath) {
+    std::shared_ptr<lib::City> MapFileManager::open(const std::string &filePath) {
         if (utils::Files::isDirectory(filePath.c_str())) {
             throw std::invalid_argument("Given path is a directory: \"" + filePath + "\"");
         }
@@ -34,7 +34,9 @@ namespace citymap::cli {
         }
 
         std::string serialized = utils::Strings::convertIstreamToString(file);
-        city = formatter.deserialize(serialized);
+        lib::City deserialized = formatter.deserialize(serialized);
+        city = std::make_shared<lib::City>(deserialized);
+
         return city;
     }
 
@@ -44,7 +46,7 @@ namespace citymap::cli {
         }
 
         std::ofstream file(currentFilePath, std::ios::trunc);
-        std::string serialized = formatter.serialize(city);
+        std::string serialized = formatter.serialize(*city);
         file << serialized;
         file.close();
         changesSaved = true;

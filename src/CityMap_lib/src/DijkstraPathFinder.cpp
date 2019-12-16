@@ -1,17 +1,18 @@
 #include <queue>
+#include <utility>
 #include "DeadEndFinder.h"
 #include "DijkstraPathFinder.h"
 #include "GraphUtilities.h"
 
 namespace citymap::lib {
 
-    DijkstraPathFinder::DijkstraPathFinder(City &city) : city(city) {
+    DijkstraPathFinder::DijkstraPathFinder(std::shared_ptr<City> city) : city(std::move(city)) {
     }
 
     bool DijkstraPathFinder::hasPath(const std::string &from, const std::string &to) const {
-        CrossroadPtr fromPtr = city.getCrossroadByName(from);
-        CrossroadPtr toPtr = city.getCrossroadByName(to);
-        std::vector<CrossroadPtr> crossroads = city.getCrossroads();
+        CrossroadPtr fromPtr = city->getCrossroadByName(from);
+        CrossroadPtr toPtr = city->getCrossroadByName(to);
+        std::vector<CrossroadPtr> crossroads = city->getCrossroads();
 
         if (!fromPtr) {
             throw std::invalid_argument("Crossroad doesn't exist: " + from);
@@ -50,11 +51,11 @@ namespace citymap::lib {
             const std::string &from,
             const std::string &to,
             unsigned int pathsCount) const {
-        std::vector<CrossroadPtr> crossroads = city.getCrossroads();
+        std::vector<CrossroadPtr> crossroads = city->getCrossroads();
         std::vector<int> shortestPathsCount(crossroads.size());
 
-        CrossroadPtr fromPtr = city.getCrossroadByName(from);
-        CrossroadPtr toPtr = city.getCrossroadByName(to);
+        CrossroadPtr fromPtr = city->getCrossroadByName(from);
+        CrossroadPtr toPtr = city->getCrossroadByName(to);
 
         std::vector<Path> bestPaths;
 
@@ -93,8 +94,8 @@ namespace citymap::lib {
     }
 
     bool DijkstraPathFinder::hasPathToAll(const std::string &start) const {
-        CrossroadPtr startNode = city.getCrossroadByName(start);
-        const std::vector<CrossroadPtr> &crossroads = city.getCrossroads();
+        CrossroadPtr startNode = city->getCrossroadByName(start);
+        const std::vector<CrossroadPtr> &crossroads = city->getCrossroads();
         std::vector<bool> visited(crossroads.size());
 
         dfsUtil(visited, startNode);
@@ -107,9 +108,4 @@ namespace citymap::lib {
 
         return true;
     }
-
-    void DijkstraPathFinder::setCity(City &newCity) {
-        this->city = newCity;
-    }
-
 }

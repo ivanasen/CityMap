@@ -1,5 +1,6 @@
 #include "CityMapCli.h"
 #include <functional>
+#include "PrintUtils.h"
 #include <Strings.h>
 
 namespace citymap::cli {
@@ -22,8 +23,8 @@ namespace citymap::cli {
         }
 
         try {
-            lib::City &city = fileManager.open(args[0]);
-            mapManager.setCity(city);
+            std::shared_ptr<lib::City> city = fileManager.open(args[0]);
+            mapManager = MapManager(city);
         } catch (std::invalid_argument &e) {
             log.e(e.what());
         }
@@ -133,7 +134,7 @@ namespace citymap::cli {
                         mapManager.findShortestPaths(args[0], args[1], SHORTEST_PATHS_COUNT);
 
                 if (!paths.empty()) {
-                    // TODO: Log paths
+                    printPaths(getOstream(), paths);
                 } else {
                     log.i("There are not paths between " + args[0] + " and " + args[1]);
                 }
@@ -203,13 +204,13 @@ namespace citymap::cli {
             return;
         }
 
-        std::vector<lib::CrossroadPtr> cycle = mapManager.findEulerCycle();
+        lib::Path cycle = mapManager.findEulerCycle();
 
-        if (cycle.empty()) {
+        if (cycle.getPath().empty()) {
             log.i("No");
         } else {
             log.i("Yes: ");
-            // TODO: Log Euler cycle
+            getOstream() << cycle;
         }
     }
 
@@ -244,7 +245,7 @@ namespace citymap::cli {
         if (deadEnds.empty()) {
             log.i("There are no dead-ends in this city");
         } else {
-            // TODO: Log dead ends
+            printCrossroadPairs(getOstream(), deadEnds);
         }
     }
 
@@ -300,5 +301,4 @@ namespace citymap::cli {
 
         setCommands(commands);
     }
-
 }

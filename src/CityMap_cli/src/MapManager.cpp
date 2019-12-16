@@ -1,25 +1,27 @@
 #include <CycleFinder.h>
 #include <DeadEndFinder.h>
+
+#include <utility>
 #include "MapManager.h"
 
 namespace citymap::cli {
 
-    MapManager::MapManager(lib::City &city) : city(city), pathFinder(city) {
+    MapManager::MapManager(const std::shared_ptr<lib::City> &city) : city(city), pathFinder(city) {
     }
 
     void MapManager::addCrossroad(const std::string &crossroad) {
-        city.addCrossroad(crossroad);
+        city->addCrossroad(crossroad);
     }
 
     void MapManager::addRoad(const std::string &from, const std::string &to, int weight) {
-        city.addRoad(from, to, weight);
+        city->addRoad(from, to, weight);
     }
 
     bool MapManager::removeRoad(const std::string &from, const std::string &to) {
         requireCrossroadExists(from);
         requireCrossroadExists(to);
 
-        return city.removeRoad(from, to);
+        return city->removeRoad(from, to);
     }
 
     bool MapManager::hasPath(const std::basic_string<char> &from, const std::basic_string<char> &to) {
@@ -38,7 +40,7 @@ namespace citymap::cli {
     }
 
     void MapManager::requireCrossroadExists(const std::string &crossroad) const {
-        if (!city.getCrossroadByName(crossroad)) {
+        if (!city->getCrossroadByName(crossroad)) {
             throw std::invalid_argument("Crossroad " + crossroad + " doesn't exist");
         }
     }
@@ -46,7 +48,7 @@ namespace citymap::cli {
     bool MapManager::setCrossroadClosed(const std::string &crossroad, bool closed) {
         requireCrossroadExists(crossroad);
 
-        lib::CrossroadPtr crossroadPtr = city.getCrossroadByName(crossroad);
+        lib::CrossroadPtr crossroadPtr = city->getCrossroadByName(crossroad);
 
         if (crossroadPtr->isClosed() == closed) {
             return false;
@@ -58,11 +60,11 @@ namespace citymap::cli {
 
     bool MapManager::hasCycleFrom(const std::string &crossroad) {
         requireCrossroadExists(crossroad);
-        return lib::CycleFinder::hasCycle(city, crossroad);
+        return lib::CycleFinder::hasCycle(*city, crossroad);
     }
 
-    std::vector<lib::CrossroadPtr> MapManager::findEulerCycle() {
-        return lib::CycleFinder::findEulerCycle(city);
+    lib::Path MapManager::findEulerCycle() {
+        return lib::CycleFinder::findEulerCycle(*city);
     }
 
     bool MapManager::canReachAllFrom(const std::string &crossroad) {
@@ -71,12 +73,6 @@ namespace citymap::cli {
     }
 
     std::vector<std::pair<lib::CrossroadPtr, lib::CrossroadPtr>> MapManager::findDeadEnds() {
-        return lib::DeadEndFinder::findDeadEnds(city);
+        return lib::DeadEndFinder::findDeadEnds(*city);
     }
-
-    void MapManager::setCity(lib::City &newCity) {
-        city = newCity;
-        pathFinder.setCity(city);
-    }
-
 }

@@ -9,9 +9,13 @@ namespace citymap::lib {
 
     class Path {
     private:
+        static const int DISTANCE_NOT_CALCULATED;
+
         std::vector<CrossroadPtr> path;
         int distance;
     public:
+        explicit Path(std::vector<CrossroadPtr> path);
+
         Path(std::vector<CrossroadPtr> path, int distance);
 
         Path addToPath(const Road &road);
@@ -21,6 +25,8 @@ namespace citymap::lib {
         [[nodiscard]] int getDistance() const;
 
         bool operator==(const Path &other) const;
+
+        friend std::ostream &operator<<(std::ostream &ostream, const Path &path);
 
         class DistanceComparator {
         public:

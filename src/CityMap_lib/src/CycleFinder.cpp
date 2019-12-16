@@ -2,6 +2,7 @@
 #include "GraphUtilities.h"
 #include <stack>
 #include <algorithm>
+#include <Path.h>
 
 namespace citymap::lib {
 
@@ -20,9 +21,9 @@ namespace citymap::lib {
         return true;
     }
 
-    std::vector<CrossroadPtr> CycleFinder::findEulerCycle(const City &city) {
+    Path CycleFinder::findEulerCycle(const City &city) {
         if (!hasEulerCycle(city)) {
-            return {};
+            return Path({});
         }
 
         const std::vector<CrossroadPtr> &crossroads = city.getCrossroads();
@@ -38,7 +39,7 @@ namespace citymap::lib {
         CrossroadPtr currNode = findConnectedNode(crossroads);
 
         if (!currNode)
-            return circuit;
+            return Path(circuit);
 
         currPath.push(currNode);
 
@@ -59,7 +60,7 @@ namespace citymap::lib {
 
         std::reverse(circuit.begin(), circuit.end());
 
-        return circuit;
+        return Path(circuit);
     }
 
     City CycleFinder::getTransposeCity(const City &city) {

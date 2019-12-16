@@ -5,6 +5,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 file(GLOB SOURCE_FILES "src/*.cpp" "src/*.h" "src/*/*.cpp" "src/*/*.h")
 
-add_executable(CityMap_cli ${SOURCE_FILES} src/MapFileManager.cpp src/MapFileManager.h)
+add_executable(CityMap_cli ${SOURCE_FILES})
 
 target_link_libraries(CityMap_cli CityMap_lib CityMap_utils CityMap_serialization)

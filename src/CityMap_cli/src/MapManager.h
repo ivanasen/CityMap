@@ -9,11 +9,11 @@ namespace citymap::cli {
 
     class MapManager {
     private:
-        lib::City &city;
+        std::shared_ptr<lib::City> city;
         lib::DijkstraPathFinder pathFinder;
 
     public:
-        explicit MapManager(lib::City &city);
+        explicit MapManager(const std::shared_ptr<lib::City> &city);
 
         void addCrossroad(const std::string &crossroad);
 
@@ -32,13 +32,11 @@ namespace citymap::cli {
 
         bool hasCycleFrom(const std::string &crossroad);
 
-        std::vector<lib::CrossroadPtr> findEulerCycle();
+        lib::Path findEulerCycle();
 
         bool canReachAllFrom(const std::string &crossroad);
 
         std::vector<std::pair<lib::CrossroadPtr, lib::CrossroadPtr>> findDeadEnds();
-
-        void setCity(lib::City &city);
 
     private:
         void requireCrossroadExists(const std::string &crossroad) const;

@@ -13,7 +13,6 @@ namespace citymap::cli {
     class CityMapCli : public Cli {
     private:
         static const int SHORTEST_PATHS_COUNT;
-
         MapFileManager fileManager;
         MapManager mapManager;
 

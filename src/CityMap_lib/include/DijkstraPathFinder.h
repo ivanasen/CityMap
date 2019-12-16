@@ -10,15 +10,13 @@ namespace citymap::lib {
 
     class DijkstraPathFinder : public PathFinder {
     private:
-        City &city;
+        std::shared_ptr<City> city;
     public:
-        explicit DijkstraPathFinder(City &city);
+        explicit DijkstraPathFinder(std::shared_ptr<City> city);
 
         [[nodiscard]] bool hasPath(const std::string &from, const std::string &to) const override;
 
         bool hasPathToAll(const std::string &start) const override;
-
-        void setCity(City &newCity);
 
         [[nodiscard]] std::vector<Path> findShortestPaths(
                 const std::string &from,

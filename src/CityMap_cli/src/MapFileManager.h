@@ -10,15 +10,15 @@ namespace citymap::cli {
     private:
         bool changesSaved = false;
         std::string currentFilePath;
-        lib::City city;
+        std::shared_ptr<lib::City> city = std::make_shared<lib::City>();
         serialization::TextMapFormatter formatter;
 
     public:
-        lib::City &createNew();
+        std::shared_ptr<lib::City> createNew();
 
-        lib::City &open(const std::string &filePath);
+        std::shared_ptr<lib::City> open(const std::string &filePath);
 
-        bool isNewFile() const;
+        [[nodiscard]] bool isNewFile() const;
 
         void save();
 
@@ -26,7 +26,7 @@ namespace citymap::cli {
 
         [[nodiscard]] bool areChangesSaved() const;
 
-        lib::City &getCity();
+        [[nodiscard]] std::shared_ptr<lib::City> getCity() const;
     };
 
 }
