@@ -4,7 +4,7 @@
 #include <iomanip>
 #include "Strings.h"
 
-namespace CityMap::Utils {
+namespace citymap::utils {
 
     const std::unordered_set<char> Strings::ESCAPE_CHARS = {
             '"', '\\', '\n', '\t'

@@ -1,7 +1,7 @@
 #include "DeadEndFinder.h"
 #include <stack>
 
-namespace CityMap::Lib {
+namespace citymap::lib {
 
     std::vector<std::pair<CrossroadPtr, CrossroadPtr>> DeadEndFinder::findDeadEnds(const City &city) {
         const std::vector<CrossroadPtr> &crossroads = city.getCrossroads();

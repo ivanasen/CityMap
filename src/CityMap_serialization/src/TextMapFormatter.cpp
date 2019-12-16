@@ -1,21 +1,19 @@
-#include <iostream>
-#include <City.h>
 #include <vector>
+#include "City.h"
 #include "Token.h"
 #include "TextMapFormatter.h"
 #include "Strings.h"
-#include <algorithm>
 
-namespace CityMap::Serialization {
+namespace citymap::serialization {
 
     const char TextMapFormatter::LINE_SEPARATOR = '\n';
 
     const char TextMapFormatter::ELEMENT_SEPARATOR = ' ';
 
-    Lib::City TextMapFormatter::deserialize(const std::string &serialized) const {
+    lib::City TextMapFormatter::deserialize(const std::string &serialized) const {
         std::vector<Token> tokens = tokenize(serialized);
 
-        Lib::City city;
+        lib::City city;
 
         bool readingNewCrossroad = true;
         std::string currentCrossroad;
@@ -53,20 +51,20 @@ namespace CityMap::Serialization {
         return city;
     }
 
-    std::string TextMapFormatter::serialize(const Lib::City &city) const {
+    std::string TextMapFormatter::serialize(const lib::City &city) const {
         std::string serialized;
 
-        std::vector<Lib::CrossroadPtr> crossroads = city.getCrossroads();
+        std::vector<lib::CrossroadPtr> crossroads = city.getCrossroads();
 
-        for (const Lib::CrossroadPtr &crossroad : crossroads) {
+        for (const lib::CrossroadPtr &crossroad : crossroads) {
             serialized += crossroad->getName();
 
-            const std::vector<Lib::Road> &roads = crossroad->getOutgoingRoads();
+            const std::vector<lib::Road> &roads = crossroad->getOutgoingRoads();
 
-            for (const Lib::Road &road : roads) {
+            for (const lib::Road &road : roads) {
                 serialized += ELEMENT_SEPARATOR;
 
-                Lib::CrossroadPtr to = road.getCrossroad().lock();
+                lib::CrossroadPtr to = road.getCrossroad().lock();
                 serialized += to->getName();
                 serialized += ELEMENT_SEPARATOR;
                 serialized += std::to_string(road.getWeight());
@@ -89,7 +87,7 @@ namespace CityMap::Serialization {
             } else if (!isspace(currentChar)) {
                 std::string element = extractNextElement(serialized, i);
 
-                if (Utils::Strings::isInteger(element)) {
+                if (utils::Strings::isInteger(element)) {
                     tokens.emplace_back(TokenType::NUMBER, element);
                 } else {
                     tokens.emplace_back(TokenType::ELEMENT, element);

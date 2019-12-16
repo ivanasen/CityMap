@@ -5,7 +5,7 @@
 #include <utility>
 #include "Crossroad.h"
 
-namespace CityMap::Lib {
+namespace citymap::lib {
 
     class Crossroad;
 

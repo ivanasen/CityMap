@@ -2,7 +2,7 @@
 
 #include "Files.h"
 
-namespace CityMap::Utils {
+namespace citymap::utils {
 
     bool Files::isFile(const char *path) {
         struct stat buf{};

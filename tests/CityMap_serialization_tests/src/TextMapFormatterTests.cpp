@@ -6,13 +6,13 @@
 #include <TextMapFormatter.h>
 #include "Strings.h"
 
-namespace CityMap::Serialization::Tests {
+namespace citymap::serialization::tests {
 
     TextMapFormatter formatter;
 
-    static std::pair<Lib::City, std::string>
+    static std::pair<lib::City, std::string>
     buildRandomCityWithExpectedSerialization(int crossroadCount, int maxRoadCount) {
-        Lib::City city;
+        lib::City city;
         std::string expected;
 
         std::random_device rd;
@@ -49,7 +49,7 @@ namespace CityMap::Serialization::Tests {
     TEST_CASE("TextMapFormatter serializes correctly", "[TextMapFormatter]") {
 
         SECTION("Empty city") {
-            Lib::City c;
+            lib::City c;
 
             std::string result = formatter.serialize(c);
 
@@ -57,7 +57,7 @@ namespace CityMap::Serialization::Tests {
         }
 
         SECTION("Single crossroad city") {
-            Lib::City c;
+            lib::City c;
 
             std::string crossroadName = "Test";
             c.addCrossroad(crossroadName);
@@ -68,7 +68,7 @@ namespace CityMap::Serialization::Tests {
         }
 
         SECTION("City with 3 crossroads without roads") {
-            Lib::City c;
+            lib::City c;
 
             std::string crossroad1 = "Test1";
             std::string crossroad2 = "Test2";
@@ -87,7 +87,7 @@ namespace CityMap::Serialization::Tests {
         }
 
         SECTION("City with 3 crossroads and roads") {
-            Lib::City c;
+            lib::City c;
 
             std::string crossroad1 = "Test1";
             std::string crossroad2 = "Test2";
@@ -128,7 +128,7 @@ namespace CityMap::Serialization::Tests {
 
     TEST_CASE("TextMapFormatter deserializes correctly", "[TextMapFormatter]") {
         SECTION("Empty city") {
-            Lib::City city = formatter.deserialize("");
+            lib::City city = formatter.deserialize("");
 
             REQUIRE(city.getCrossroads().empty());
         }
@@ -136,24 +136,24 @@ namespace CityMap::Serialization::Tests {
         SECTION("City with single crossroad") {
             auto expected = "test";
 
-            Lib::City city = formatter.deserialize(expected);
+            lib::City city = formatter.deserialize(expected);
 
-            const std::vector<Lib::CrossroadPtr> &crossroads = city.getCrossroads();
+            const std::vector<lib::CrossroadPtr> &crossroads = city.getCrossroads();
             REQUIRE(crossroads.size() == 1);
             REQUIRE(crossroads[0]->getName() == expected);
         }
 
         SECTION("Serializing and rebuilding a random city back works") {
             auto cityWithSerialization = buildRandomCityWithExpectedSerialization(1000, 1000);
-            Lib::City city = cityWithSerialization.first;
+            lib::City city = cityWithSerialization.first;
 
             std::string expected = formatter.serialize(city);
 
-            Lib::City deserialized = formatter.deserialize(expected);
+            lib::City deserialized = formatter.deserialize(expected);
 
             std::vector<std::string> lines =
-                    Utils::Strings::split(formatter.serialize(deserialized), '\n');
-            std::vector<std::string> expectedLines = Utils::Strings::split(expected, '\n');
+                    utils::Strings::split(formatter.serialize(deserialized), '\n');
+            std::vector<std::string> expectedLines = utils::Strings::split(expected, '\n');
 
             std::unordered_set<std::string> linesSet;
             for (const std::string &s : lines) {

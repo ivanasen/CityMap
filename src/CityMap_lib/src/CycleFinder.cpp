@@ -3,7 +3,7 @@
 #include <stack>
 #include <algorithm>
 
-namespace CityMap::Lib {
+namespace citymap::lib {
 
     bool CycleFinder::hasEulerCycle(const City &city) {
         if (!isStronglyConnected(city))
@@ -22,7 +22,7 @@ namespace CityMap::Lib {
 
     std::vector<CrossroadPtr> CycleFinder::findEulerCycle(const City &city) {
         if (!hasEulerCycle(city)) {
-            throw std::invalid_argument("The city doesn't have a valid Euler circuit.");
+            return {};
         }
 
         const std::vector<CrossroadPtr> &crossroads = city.getCrossroads();

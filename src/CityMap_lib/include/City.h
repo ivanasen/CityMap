@@ -6,7 +6,7 @@
 #include <string>
 #include "Crossroad.h"
 
-namespace CityMap::Lib {
+namespace citymap::lib {
 
         using CrossroadPtr = std::shared_ptr<Crossroad>;
 

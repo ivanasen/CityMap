@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace CityMap::Cli {
+namespace citymap::cli {
 
     class Log {
     public:

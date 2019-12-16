@@ -3,7 +3,7 @@
 #include "Path.h"
 #include "catch.hpp"
 
-namespace CityMap::Lib::Tests {
+namespace citymap::lib::tests {
 
     TEST_CASE("hasPath works correctly", "[DijkstraPathFinder]") {
         City c;

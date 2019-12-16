@@ -1,7 +1,7 @@
 #include "catch.hpp"
 #include "DeadEndFinder.h"
 
-namespace CityMap::Lib::Tests {
+namespace citymap::lib::tests {
 
     TEST_CASE("DeadEndFinder doesn't find any dead-ends in city with less than 2 crossroads", "[DeadEndFinderTests]") {
         City c;

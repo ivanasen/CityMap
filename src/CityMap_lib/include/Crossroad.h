@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include "Road.h"
 
-namespace CityMap::Lib {
+namespace citymap::lib {
 
     class Road;
 

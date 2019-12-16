@@ -4,7 +4,7 @@
 #include <vector>
 #include "City.h"
 
-namespace CityMap::Lib {
+namespace citymap::lib {
 
     void dfsUtil(std::vector<bool> &visited, const CrossroadPtr &c);
 

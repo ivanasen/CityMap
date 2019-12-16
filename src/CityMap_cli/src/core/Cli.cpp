@@ -5,7 +5,7 @@
 #include "Strings.h"
 #include "Cli.h"
 
-namespace CityMap::Cli {
+namespace citymap::cli {
 
     Cli::Cli(std::ostream &ostream, std::istream &istream)
             : Cli(ostream,
@@ -32,9 +32,10 @@ namespace CityMap::Cli {
     void Cli::start() {
         std::string input;
         ostream << cmdPrefix;
+
         do {
             getline(istream, input);
-            input = Utils::Strings::trim(input);
+            input = utils::Strings::trim(input);
             if (!input.empty() && input != quitCmd) {
                 onInput(input);
             }
@@ -100,8 +101,8 @@ namespace CityMap::Cli {
     }
 
     std::vector<std::string> Cli::separateInput(const std::string &input) {
-        std::string trimmed = Utils::Strings::trim(input);
-        std::vector<std::string> separatedInput = Utils::Strings::splitBySpaces(input);
+        std::string trimmed = utils::Strings::trim(input);
+        std::vector<std::string> separatedInput = utils::Strings::splitBySpaces(input);
         return separatedInput;
     }
 

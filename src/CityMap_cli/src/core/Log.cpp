@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Log.h"
 
-namespace CityMap::Cli {
+namespace citymap::cli {
 
     Log::Log(std::ostream &ostream) : ostream(ostream) {
     }

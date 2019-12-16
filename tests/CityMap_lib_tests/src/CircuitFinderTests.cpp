@@ -2,20 +2,20 @@
 #include "CycleFinder.h"
 #include "catch.hpp"
 
-namespace CityMap::Lib::Tests {
+namespace citymap::lib::tests {
 
-    TEST_CASE("hasEulerCycle returns true for an empty city", "[CycleFinder]") {
+    TEST_CASE("findEulerCycle returns true for an empty city", "[CycleFinder]") {
         City c;
         REQUIRE(CycleFinder::hasEulerCycle(c));
     }
 
-    TEST_CASE("hasEulerCycle returns true for a city with only one crossroad", "[CycleFinder]") {
+    TEST_CASE("findEulerCycle returns true for a city with only one crossroad", "[CycleFinder]") {
         City c;
         c.addCrossroad("0");
         REQUIRE(CycleFinder::hasEulerCycle(c));
     }
 
-    TEST_CASE("hasEulerCycle returns false on a case with two crossroads with one road", "[CycleFinder]") {
+    TEST_CASE("findEulerCycle returns false on a case with two crossroads with one road", "[CycleFinder]") {
         City c;
         c.addCrossroad("0");
         c.addCrossroad("1");
@@ -23,7 +23,7 @@ namespace CityMap::Lib::Tests {
         REQUIRE_FALSE(CycleFinder::hasEulerCycle(c));
     }
 
-    TEST_CASE("hasEulerCycle returns true for simple cycle with 3 crossroads", "[CycleFinder]") {
+    TEST_CASE("findEulerCycle returns true for simple cycle with 3 crossroads", "[CycleFinder]") {
         City c;
         c.addCrossroad("0");
         c.addCrossroad("1");
@@ -34,7 +34,7 @@ namespace CityMap::Lib::Tests {
         REQUIRE(CycleFinder::hasEulerCycle(c));
     }
 
-    TEST_CASE("hasEulerCycle returns true on an Euler city", "[CycleFinder]") {
+    TEST_CASE("findEulerCycle returns true on an Euler city", "[CycleFinder]") {
         City c;
         c.addCrossroad("0");
         c.addCrossroad("1");
@@ -52,7 +52,7 @@ namespace CityMap::Lib::Tests {
         REQUIRE(CycleFinder::hasEulerCycle(c));
     }
 
-    TEST_CASE("hasEulerCycle returns false on euler components which aren't connected", "[CycleFinder]") {
+    TEST_CASE("findEulerCycle returns false on euler components which aren't connected", "[CycleFinder]") {
         City c;
         c.addCrossroad("0");
         c.addCrossroad("1");
@@ -71,7 +71,7 @@ namespace CityMap::Lib::Tests {
         REQUIRE_FALSE(CycleFinder::hasEulerCycle(c));
     }
 
-    TEST_CASE("hasEulerCycle returns false on an non-Euler city", "[CycleFinder]") {
+    TEST_CASE("findEulerCycle returns false on an non-Euler city", "[CycleFinder]") {
         City c;
         c.addCrossroad("0");
         c.addCrossroad("1");

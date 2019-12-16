@@ -2,7 +2,7 @@
 
 #include <utility>
 
-namespace CityMap::Lib {
+namespace citymap::lib {
 
     Road::Road(std::weak_ptr<Crossroad> crossroad, int weight)
             : crossroad(std::move(crossroad)), weight(weight) {

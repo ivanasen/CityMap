@@ -5,7 +5,7 @@
 #include "Road.h"
 #include "City.h"
 
-namespace CityMap::Lib {
+namespace citymap::lib {
 
     class DeadEndFinder {
     public:

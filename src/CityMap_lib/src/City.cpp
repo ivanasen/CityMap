@@ -2,7 +2,7 @@
 
 #include <memory>
 
-namespace CityMap::Lib {
+namespace citymap::lib {
 
     void City::addCrossroad(const std::string &crossroad) {
         if (crossroadIndexes.find(crossroad) != crossroadIndexes.end())
@@ -31,7 +31,7 @@ namespace CityMap::Lib {
     bool City::removeRoad(const std::string &from, const std::string &to) {
         CrossroadPtr fromPtr = getCrossroadByName(from);
         CrossroadPtr toPtr = getCrossroadByName(to);
-        return fromPtr->removeRoadTo(toPtr) && toPtr->removeRoadFrom(fromPtr);
+        return fromPtr && toPtr && fromPtr->removeRoadTo(toPtr) && toPtr->removeRoadFrom(fromPtr);
     }
 
     const std::vector<CrossroadPtr> &City::getCrossroads() const {

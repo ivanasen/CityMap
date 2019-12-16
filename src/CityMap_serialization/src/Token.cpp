@@ -1,6 +1,6 @@
 #include "Token.h"
 
-namespace CityMap::Serialization {
+namespace citymap::serialization {
 
     Token::Token(const TokenType &type, std::string value) : type(type), value(std::move(value)) {
     }

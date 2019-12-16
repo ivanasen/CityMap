@@ -5,7 +5,7 @@
 #include <fstream>
 #include "Log.h"
 
-namespace CityMap::Cli {
+namespace citymap::cli {
 
     class Cli {
     private:

@@ -6,17 +6,19 @@
 #include "PathFinder.h"
 #include "City.h"
 
-namespace CityMap::Lib {
+namespace citymap::lib {
 
     class DijkstraPathFinder : public PathFinder {
     private:
-        const City &city;
+        City &city;
     public:
-        explicit DijkstraPathFinder(const City &city);
+        explicit DijkstraPathFinder(City &city);
 
         [[nodiscard]] bool hasPath(const std::string &from, const std::string &to) const override;
 
         bool hasPathToAll(const std::string &start) const override;
+
+        void setCity(City &newCity);
 
         [[nodiscard]] std::vector<Path> findShortestPaths(
                 const std::string &from,

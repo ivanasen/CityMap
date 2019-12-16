@@ -1,10 +1,10 @@
 #include "catch.hpp"
 #include "City.h"
 
-namespace CityMap::Lib::Tests {
+namespace citymap::lib::tests {
 
     TEST_CASE("addCrossroad works correctly", "[CityTests]") {
-        Lib::City city;
+        lib::City city;
         std::string expected1 = "crossroad1";
         std::string expected2 = "crossroad2";
 

@@ -4,7 +4,7 @@
 #include <vector>
 #include <unordered_set>
 
-namespace CityMap::Utils {
+namespace citymap::utils {
 
     class Strings {
     public:

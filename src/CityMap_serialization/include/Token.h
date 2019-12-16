@@ -4,7 +4,7 @@
 #include <string>
 #include "TokenType.h"
 
-namespace CityMap::Serialization {
+namespace citymap::serialization {
 
     class Token {
     private:

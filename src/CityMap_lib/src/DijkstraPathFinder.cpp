@@ -3,9 +3,9 @@
 #include "DijkstraPathFinder.h"
 #include "GraphUtilities.h"
 
-namespace CityMap::Lib {
+namespace citymap::lib {
 
-    DijkstraPathFinder::DijkstraPathFinder(const City &city) : city(city) {
+    DijkstraPathFinder::DijkstraPathFinder(City &city) : city(city) {
     }
 
     bool DijkstraPathFinder::hasPath(const std::string &from, const std::string &to) const {
@@ -106,6 +106,10 @@ namespace CityMap::Lib {
         }
 
         return true;
+    }
+
+    void DijkstraPathFinder::setCity(City &newCity) {
+        this->city = newCity;
     }
 
 }

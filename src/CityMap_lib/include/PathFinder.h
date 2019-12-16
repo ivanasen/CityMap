@@ -7,7 +7,7 @@
 #include "DijkstraPathFinder.h"
 #include "Path.h"
 
-namespace CityMap::Lib {
+namespace citymap::lib {
 
     class PathFinder {
     public:

@@ -4,7 +4,7 @@
 #include "Crossroad.h"
 #include <memory>
 
-namespace CityMap::Lib::Tests {
+namespace citymap::lib::tests {
 
     TEST_CASE("addRoadTo adds correctly", "[CrossroadTests]") {
         Crossroad c(0, "0");

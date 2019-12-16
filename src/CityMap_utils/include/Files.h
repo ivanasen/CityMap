@@ -1,6 +1,6 @@
 #pragma once
 
-namespace CityMap::Utils {
+namespace citymap::utils {
 
     class Files {
     public:

@@ -4,7 +4,7 @@
 #include <vector>
 #include "City.h"
 
-namespace CityMap::Lib {
+namespace citymap::lib {
 
         class CycleFinder {
         public:

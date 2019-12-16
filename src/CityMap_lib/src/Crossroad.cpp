@@ -1,7 +1,7 @@
 #include <utility>
 #include "Crossroad.h"
 
-namespace CityMap::Lib {
+namespace citymap::lib {
 
     Crossroad::Crossroad(int id, std::string name) : id(id), name(std::move(name)) {
     }

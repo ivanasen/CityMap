@@ -5,16 +5,17 @@
 #include <City.h>
 #include <DijkstraPathFinder.h>
 #include "core/Cli.h"
+#include "MapManager.h"
+#include "MapFileManager.h"
 
-namespace CityMap::Cli {
+namespace citymap::cli {
 
-    // TODO: Add project bonus commands: location, change, neighbours, move, closed,
     class CityMapCli : public Cli {
     private:
         static const int SHORTEST_PATHS_COUNT;
 
-        Lib::City city;
-        Lib::DijkstraPathFinder pathFinder;
+        MapFileManager fileManager;
+        MapManager mapManager;
 
     public:
         CityMapCli(std::ostream &ostream, std::istream &istream);
@@ -51,6 +52,16 @@ namespace CityMap::Cli {
         void canReachAllFrom(const std::vector<std::string> &args);
 
         void findDeadEnds(const std::vector<std::string> &args);
+
+        void currentLocation(const std::vector<std::string> &args);
+
+        void changeLocation(const std::vector<std::string> &args);
+
+        void showNeighbours(const std::vector<std::string> &args);
+
+        void moveLocation(const std::vector<std::string> &args);
+
+        void showClosed(const std::vector<std::string> &args);
     };
 
 }
