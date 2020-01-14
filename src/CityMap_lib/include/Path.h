@@ -26,6 +26,8 @@ namespace citymap::lib {
 
         bool operator==(const Path &other) const;
 
+        [[nodiscard]] std::string toString() const;
+
         friend std::ostream &operator<<(std::ostream &ostream, const Path &path);
 
         class DistanceComparator {

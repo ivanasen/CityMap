@@ -24,7 +24,7 @@ namespace citymap::cli {
         return city->removeRoad(from, to);
     }
 
-    bool MapManager::hasPath(const std::basic_string<char> &from, const std::basic_string<char> &to) {
+    bool MapManager::hasPath(const std::basic_string<char> &from, const std::basic_string<char> &to) const {
         requireCrossroadExists(from);
         requireCrossroadExists(to);
 
@@ -32,7 +32,7 @@ namespace citymap::cli {
     }
 
     std::vector<lib::Path>
-    MapManager::findShortestPaths(const std::string &from, const std::string &to, int maxPathsCount) {
+    MapManager::findShortestPaths(const std::string &from, const std::string &to, int maxPathsCount) const {
         requireCrossroadExists(from);
         requireCrossroadExists(to);
 
@@ -58,21 +58,35 @@ namespace citymap::cli {
         return true;
     }
 
-    bool MapManager::hasCycleFrom(const std::string &crossroad) {
+    std::vector<lib::CrossroadPtr> MapManager::findClosedCrossroads() const {
+        std::vector<lib::CrossroadPtr> closed;
+        for (const auto &crossroad : city->getCrossroads()) {
+            if (crossroad->isClosed()) {
+                closed.push_back(crossroad);
+            }
+        }
+        return std::vector<lib::CrossroadPtr>();
+    }
+
+    bool MapManager::hasCycleFrom(const std::string &crossroad) const {
         requireCrossroadExists(crossroad);
         return lib::CycleFinder::hasCycle(*city, crossroad);
     }
 
-    lib::Path MapManager::findEulerCycle() {
+    lib::Path MapManager::findEulerCycle() const {
         return lib::CycleFinder::findEulerCycle(*city);
     }
 
-    bool MapManager::canReachAllFrom(const std::string &crossroad) {
+    bool MapManager::canReachAllFrom(const std::string &crossroad) const {
         requireCrossroadExists(crossroad);
         return pathFinder.hasPathToAll(crossroad);
     }
 
-    std::vector<std::pair<lib::CrossroadPtr, lib::CrossroadPtr>> MapManager::findDeadEnds() {
+    std::vector<std::pair<lib::CrossroadPtr, lib::CrossroadPtr>> MapManager::findDeadEnds() const {
         return lib::DeadEndFinder::findDeadEnds(*city);
+    }
+
+    const std::shared_ptr<lib::City> &MapManager::getCity() const {
+        return city;
     }
 }

@@ -74,4 +74,8 @@ namespace citymap::lib {
         return incomingRoads;
     }
 
+    std::string Crossroad::toString() const {
+        return name;
+    }
+
 }

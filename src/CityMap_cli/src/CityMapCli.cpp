@@ -8,7 +8,9 @@ namespace citymap::cli {
     const int CityMapCli::SHORTEST_PATHS_COUNT = 3;
 
     CityMapCli::CityMapCli(std::ostream &ostream, std::istream &istream)
-            : mapManager(fileManager.getCity()), Cli(ostream, istream) {
+            : mapManager(fileManager.getCity()),
+              Cli(ostream, istream),
+              cityTraveller(mapManager) {
         setQuitMessage("Exiting CityMap…");
         configureCommands();
     }
@@ -80,11 +82,6 @@ namespace citymap::cli {
             mapManager.addRoad(args[0], args[1], std::stoi(args[2]));
             log.i("Road added.");
         }
-    }
-
-    void CityMapCli::removeCrossroad(const std::vector<std::string> &args) {
-        // TODO: Implement removeCrossroad
-        log.e("Not implemented!");
     }
 
     void CityMapCli::removeRoad(const std::vector<std::string> &args) {
@@ -250,28 +247,50 @@ namespace citymap::cli {
     }
 
     void CityMapCli::currentLocation(const std::vector<std::string> &args) {
-        // TODO: Implement currentLocation
-        log.e("Not implemented!");
+        log.i(cityTraveller.getCurrentLocation()->getName());
     }
 
     void CityMapCli::changeLocation(const std::vector<std::string> &args) {
-        // TODO: Implement changeLocation
-        log.e("Not implemented!");
+        if (args.empty()) {
+            log.e("Please specify crossroad.");
+        } else if (args.size() != 1) {
+            log.e("Invalid arguments!");
+        } else {
+            if (cityTraveller.changeLocation(args[0])) {
+                log.i("Location changed.");
+            } else {
+                log.e("Crossroad " + args[0] + " doesn't exist.");
+            }
+        }
     }
 
     void CityMapCli::showNeighbours(const std::vector<std::string> &args) {
-        // TODO: Implement showNeighbours
-        log.e("Not implemented!");
+        std::vector<lib::CrossroadPtr> crossroads = cityTraveller.getNeighbours();
+        printCrossroads(getOstream(), crossroads);
     }
 
     void CityMapCli::moveLocation(const std::vector<std::string> &args) {
-        // TODO: Implement moveLocation
-        log.e("Not implemented!");
+        if (args.empty()) {
+            log.e("Please specify crossroad.");
+        } else if (args.size() != 1) {
+            log.e("Invalid arguments!");
+        } else {
+            try {
+                lib::Path path = cityTraveller.moveLocation(args[0]);
+                log.i(path.toString());
+            } catch (const std::invalid_argument &e) {
+                log.e(e.what());
+            }
+        }
     }
 
     void CityMapCli::showClosed(const std::vector<std::string> &args) {
-        // TODO: Implement showClosed
-        log.e("Not implemented!");
+        if (!args.empty()) {
+            log.e("Invalid arguments!");
+        }
+
+        std::vector<lib::CrossroadPtr> closed = mapManager.findClosedCrossroads();
+        printCrossroads(getOstream(), closed);
     }
 
     void CityMapCli::configureCommands() {
@@ -283,7 +302,6 @@ namespace citymap::cli {
         commands["saveAs"] = [&](auto args) { saveAs(args); };
         commands["addCrossroad"] = [&](auto args) { addCrossroad(args); };
         commands["addRoad"] = [&](auto args) { addRoad(args); };
-        commands["removeCrossroad"] = [&](auto args) { removeCrossroad(args); };
         commands["removeRoad"] = [&](auto args) { removeRoad(args); };
         commands["hasPath"] = [&](auto args) { hasPath(args); };
         commands["findShortestPaths"] = [&](auto args) { findShortestPaths(args); };

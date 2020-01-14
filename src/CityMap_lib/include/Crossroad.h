@@ -34,6 +34,8 @@ namespace citymap::lib {
 
         [[nodiscard]] int getId() const;
 
+        std::string toString() const;
+
         bool operator==(const Crossroad &other) const;
 
         bool operator!=(const Crossroad &other) const;

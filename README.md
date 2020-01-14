@@ -28,7 +28,6 @@ The available commands are as follows:
 3. `saveAs <location>` - Save CityMap file to location.
 4. `addCrossroad <crossroad-name>` - Add a Crossroad to the city.
 5. `addRoad <from> <to> <weight>` - Add a Road.
-6. `removeCrossroad <crossroad-name>` - Remove a Crossroad. (Not implemented)
 7. `removeRoad <from> <to>` - Remove a Road.
 8. `hasPath <from> <to>` - Is there a path from `from` to `to` in the city.
 9. `findShortestPaths <from> <to>` - Find top 3 shortest paths.

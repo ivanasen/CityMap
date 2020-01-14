@@ -14,7 +14,7 @@ namespace citymap::cli {
             std::ostream &ostream,
             const std::vector<std::pair<lib::CrossroadPtr, lib::CrossroadPtr>> &pairs) {
         for (const auto &p : pairs) {
-            ostream << "(" << p.first->getName() << " -> " << p.second->getName() << ")";
+            ostream << "(" << p.first->toString() << " -> " << p.second->toString() << ")";
 
             if (p != pairs.back()) {
                 ostream << ", ";
@@ -22,5 +22,11 @@ namespace citymap::cli {
         }
 
         ostream << '\n';
+    }
+
+    void printCrossroads(std::ostream &ostream, const std::vector<lib::CrossroadPtr> &crossroads) {
+        for (const auto &c : crossroads) {
+            ostream << c->toString() << std::endl;
+        }
     }
 }

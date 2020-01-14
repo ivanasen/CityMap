@@ -34,17 +34,19 @@ namespace citymap::lib {
     }
 
     std::ostream &operator<<(std::ostream &ostream, const Path &path) {
-        std::vector<CrossroadPtr> p = path.path;
-        for (const CrossroadPtr &c : p) {
-            ostream << c->getName();
-            if (c != p.back()) {
-                ostream << " -> ";
+        ostream << path.toString() << std::endl;
+        return ostream;
+    }
+
+    std::string Path::toString() const {
+        std::string result;
+        for (const CrossroadPtr &c : path) {
+            result += c->toString();
+            if (c != path.back()) {
+                result += " -> ";
             }
         }
-
-        ostream << '\n';
-
-        return ostream;
+        return result;
     }
 
 }

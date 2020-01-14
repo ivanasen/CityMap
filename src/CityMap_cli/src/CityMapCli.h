@@ -7,6 +7,7 @@
 #include "core/Cli.h"
 #include "MapManager.h"
 #include "MapFileManager.h"
+#include "CityTraveller.h"
 
 namespace citymap::cli {
 
@@ -15,6 +16,7 @@ namespace citymap::cli {
         static const int SHORTEST_PATHS_COUNT;
         MapFileManager fileManager;
         MapManager mapManager;
+        CityTraveller cityTraveller;
 
     public:
         CityMapCli(std::ostream &ostream, std::istream &istream);
@@ -31,8 +33,6 @@ namespace citymap::cli {
         void addCrossroad(const std::vector<std::string> &args);
 
         void addRoad(const std::vector<std::string> &args);
-
-        void removeCrossroad(const std::vector<std::string> &args);
 
         void removeRoad(const std::vector<std::string> &args);
 

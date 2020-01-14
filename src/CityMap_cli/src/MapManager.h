@@ -21,22 +21,26 @@ namespace citymap::cli {
 
         bool removeRoad(const std::string &from, const std::string &to);
 
-        bool hasPath(const std::string &from, const std::string &to);
+        [[nodiscard]] bool hasPath(const std::string &from, const std::string &to) const;
 
-        std::vector<lib::Path> findShortestPaths(
+        [[nodiscard]] std::vector<lib::Path> findShortestPaths(
                 const std::string &from,
                 const std::string &to,
-                int maxPathsCount);
+                int maxPathsCount = 1) const;
 
         bool setCrossroadClosed(const std::string &crossroad, bool closed);
 
-        bool hasCycleFrom(const std::string &crossroad);
+        [[nodiscard]] bool hasCycleFrom(const std::string &crossroad) const;
 
-        lib::Path findEulerCycle();
+        [[nodiscard]] lib::Path findEulerCycle() const;
 
-        bool canReachAllFrom(const std::string &crossroad);
+        [[nodiscard]] bool canReachAllFrom(const std::string &crossroad) const;
 
-        std::vector<std::pair<lib::CrossroadPtr, lib::CrossroadPtr>> findDeadEnds();
+        [[nodiscard]] std::vector<std::pair<lib::CrossroadPtr, lib::CrossroadPtr>> findDeadEnds() const;
+
+        [[nodiscard]] std::vector<lib::CrossroadPtr> findClosedCrossroads() const;
+
+        [[nodiscard]] const std::shared_ptr<lib::City> &getCity() const;
 
     private:
         void requireCrossroadExists(const std::string &crossroad) const;
