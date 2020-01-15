@@ -11,12 +11,12 @@ namespace citymap::lib {
 
     class PathFinder {
     public:
-        [[nodiscard]] virtual bool hasPath(const std::string &from, const std::string &to) const = 0;
+        [[nodiscard]] virtual bool hasPath(const CrossroadPtr &from, const CrossroadPtr &to) const = 0;
 
-        [[nodiscard]] virtual bool hasPathToAll(const std::string &start) const = 0;
+        [[nodiscard]] virtual bool hasPathToAll(const CrossroadPtr &start) const = 0;
 
         [[nodiscard]] virtual std::vector<Path>
-        findShortestPaths(const std::string &from, const std::string &to, unsigned int pathsCount) const = 0;
+        findShortestPaths(const CrossroadPtr &from, const CrossroadPtr &to, unsigned int pathsCount) const = 0;
     };
 
 }

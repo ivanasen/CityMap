@@ -5,7 +5,7 @@
 #include <City.h>
 #include <DijkstraPathFinder.h>
 #include "core/Cli.h"
-#include "MapManager.h"
+#include "CityManager.h"
 #include "MapFileManager.h"
 #include "CityTraveller.h"
 
@@ -15,8 +15,8 @@ namespace citymap::cli {
     private:
         static const int SHORTEST_PATHS_COUNT;
         MapFileManager fileManager;
-        MapManager mapManager;
-        CityTraveller cityTraveller;
+        CityManager cityManager;
+        lib::CityTraveller cityTraveller;
 
     public:
         CityMapCli(std::ostream &ostream, std::istream &istream);

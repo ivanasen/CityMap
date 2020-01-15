@@ -25,6 +25,8 @@ namespace citymap::lib {
             const std::vector<CrossroadPtr> &getCrossroads() const;
 
             CrossroadPtr getCrossroadByName(const std::string &name) const;
+
+            CrossroadPtr getCrossroadById(int id) const;
         };
 
     }

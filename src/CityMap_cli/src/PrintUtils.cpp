@@ -25,8 +25,13 @@ namespace citymap::cli {
     }
 
     void printCrossroads(std::ostream &ostream, const std::vector<lib::CrossroadPtr> &crossroads) {
+        ostream << "{ ";
         for (const auto &c : crossroads) {
-            ostream << c->toString() << std::endl;
+            ostream << c->toString();
+            if (c != crossroads.back()) {
+                ostream << ", ";
+            }
         }
+        ostream << " }" << std::endl;
     }
 }

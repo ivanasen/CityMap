@@ -177,7 +177,7 @@ namespace citymap::lib::tests {
         SECTION("Returns false on single crossroad city") {
             City c;
             c.addCrossroad("test");
-            REQUIRE_FALSE(CycleFinder::hasCycle(c, "test"));
+            REQUIRE_FALSE(CycleFinder::hasCycle(c, c.getCrossroadByName("test")));
         }
 
         SECTION("Returns false on single road city") {
@@ -187,7 +187,7 @@ namespace citymap::lib::tests {
 
             c.addRoad("0", "1", 1);
 
-            REQUIRE_FALSE(CycleFinder::hasCycle(c, "0"));
+            REQUIRE_FALSE(CycleFinder::hasCycle(c, c.getCrossroadByName("0")));
         }
 
         SECTION("Returns true on city with 2 crossroads and circuit") {
@@ -198,7 +198,7 @@ namespace citymap::lib::tests {
             c.addRoad("0", "1", 1);
             c.addRoad("1", "0", 1);
 
-            REQUIRE(CycleFinder::hasCycle(c, "0"));
+            REQUIRE(CycleFinder::hasCycle(c, c.getCrossroadByName("0")));
         }
 
         SECTION("Returns true on city with 3 crossroads and circuit") {
@@ -211,7 +211,7 @@ namespace citymap::lib::tests {
             c.addRoad("1", "2", 1);
             c.addRoad("2", "0", 1);
 
-            REQUIRE(CycleFinder::hasCycle(c, "2"));
+            REQUIRE(CycleFinder::hasCycle(c, c.getCrossroadByName("2")));
         }
 
         SECTION("Works on city with more crossroads") {
@@ -228,8 +228,8 @@ namespace citymap::lib::tests {
             c.addRoad("3", "0", 1);
             c.addRoad("3", "4", 1);
 
-            REQUIRE(CycleFinder::hasCycle(c, "0"));
-            REQUIRE_FALSE(CycleFinder::hasCycle(c, "4"));
+            REQUIRE(CycleFinder::hasCycle(c, c.getCrossroadByName("0")));
+            REQUIRE_FALSE(CycleFinder::hasCycle(c, c.getCrossroadByName("4")));
         }
 
         SECTION("Works on city with the form of a tree") {
@@ -246,7 +246,7 @@ namespace citymap::lib::tests {
             city.addRoad("1", "4", 1);
 
             for (const CrossroadPtr &c : city.getCrossroads()) {
-                REQUIRE_FALSE(CycleFinder::hasCycle(city, c->getName()));
+                REQUIRE_FALSE(CycleFinder::hasCycle(city, c));
             }
         }
 

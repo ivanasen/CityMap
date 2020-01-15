@@ -131,9 +131,8 @@ namespace citymap::lib {
         return nullptr;
     }
 
-    bool CycleFinder::hasCycle(const City &city, const std::string &startName) {
-        CrossroadPtr startNode = city.getCrossroadByName(startName);
-        const std::vector<Road> &children = startNode->getOutgoingRoads();
+    bool CycleFinder::hasCycle(const City &city, const CrossroadPtr &start) {
+        const std::vector<Road> &children = start->getOutgoingRoads();
 
         if (children.empty()) {
             return false;
@@ -148,7 +147,7 @@ namespace citymap::lib {
             if (!visited[c->getId()]) {
                 dfsUtil(visited, c);
 
-                if (visited[startNode->getId()]) {
+                if (visited[start->getId()]) {
                     return true;
                 }
             }

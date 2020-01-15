@@ -21,6 +21,7 @@ namespace citymap::cli {
     std::shared_ptr<lib::City> MapFileManager::createNew() {
         city = std::make_shared<lib::City>();;
         changesSaved = false;
+        return city;
     }
 
     std::shared_ptr<lib::City> MapFileManager::open(const std::string &filePath) {

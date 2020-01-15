@@ -25,23 +25,23 @@ The available commands are as follows:
 
 1. `open <file-name>` - Open a CityMap file.
 2. `save` - Save the CityMap file.
-3. `saveAs <location>` - Save CityMap file to location.
-4. `addCrossroad <crossroad-name>` - Add a Crossroad to the city.
-5. `addRoad <from> <to> <weight>` - Add a Road.
-7. `removeRoad <from> <to>` - Remove a Road.
-8. `hasPath <from> <to>` - Is there a path from `from` to `to` in the city.
-9. `findShortestPaths <from> <to>` - Find top 3 shortest paths.
-10. `closeCrossroad <crossroad-name>` - Close crossroad.
-11. `openCrossroad <crossroad-name>` - Open crossroad.
-12. `hasCycleFrom <crossroad-name>` - Check if there is a cycle in the city containing `crossroad-name`.
-13. `findEulerCycle` - Find if there is an Euler cycle in the city.
-14. `canReachAllFrom <crossroad-name>` - Check if there is a path from `crossroad-name` to all other crossroads in the city.
-15. `findDeadEnds` - Find all dead-ends in the city.
-16. `currentLocation` - Print current location. (Not implemented)
-17. `showNeighbours` - Show neighbours to `currentLocation` crossroad. (Not implemented)
-18. `changeLocation <crossroad-name>` - Change `currentLocation` (Not implemented)
-19. `moveLocation <crossroad-name>` - Change `currentLocation` printing the travelled path. (Not implemented)
-20. `showClosed` - Show closed crossroads. (Not implemented)
+3. `save_as <location>` - Save CityMap file to location.
+4. `add <crossroad-name>` - Add a Crossroad to the city.
+5. `add_road <from> <to> <weight>` - Add a Road.
+7. `rm_road <from> <to>` - Remove a Road.
+8. `has_path <from> <to>` - Is there a path from `from` to `to` in the city.
+9. `find_paths <from> <to>` - Find top 3 shortest paths.
+10. `close <crossroad-name>` - Close crossroad.
+11. `open <crossroad-name>` - Open crossroad.
+12. `has_cycle_from <crossroad-name>` - Check if there is a cycle in the city containing `crossroad-name`.
+13. `euler_cycle` - Find if there is an Euler cycle in the city.
+14. `reach_all <crossroad-name>` - Check if there is a path from `crossroad-name` to all other crossroads in the city.
+15. `dead_ends` - Find all dead-ends in the city.
+16. `current` - Print current location. (Not implemented)
+17. `neighbours` - Show neighbours to `currentLocation` crossroad. (Not implemented)
+18. `change <crossroad-name>` - Change `currentLocation` (Not implemented)
+19. `mv <crossroad-name>` - Change `currentLocation` printing the travelled path. (Not implemented)
+20. `closed` - Show closed crossroads. (Not implemented)
 
 ### Third-party libraries used
 

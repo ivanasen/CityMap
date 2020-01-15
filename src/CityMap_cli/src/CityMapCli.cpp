@@ -8,9 +8,9 @@ namespace citymap::cli {
     const int CityMapCli::SHORTEST_PATHS_COUNT = 3;
 
     CityMapCli::CityMapCli(std::ostream &ostream, std::istream &istream)
-            : mapManager(fileManager.getCity()),
+            : cityManager(fileManager.getCity()),
               Cli(ostream, istream),
-              cityTraveller(mapManager) {
+              cityTraveller(fileManager.getCity()) {
         setQuitMessage("Exiting CityMap…");
         configureCommands();
     }
@@ -26,7 +26,7 @@ namespace citymap::cli {
 
         try {
             std::shared_ptr<lib::City> city = fileManager.open(args[0]);
-            mapManager = MapManager(city);
+            cityManager = CityManager(city);
         } catch (std::invalid_argument &e) {
             log.e(e.what());
         }
@@ -39,7 +39,7 @@ namespace citymap::cli {
 
         try {
             fileManager.save();
-        } catch (std::invalid_argument &e) {
+        } catch (std::logic_error &e) {
             log.e(e.what());
         }
     }
@@ -66,7 +66,7 @@ namespace citymap::cli {
         } else if (args.size() != 1) {
             log.e("Invalid arguments!");
         } else {
-            mapManager.addCrossroad(args[0]);
+            cityManager.addCrossroad(args[0]);
             log.i("Crossroad added.");
         }
     }
@@ -79,7 +79,7 @@ namespace citymap::cli {
         } else if (!utils::Strings::isInteger(args[2])) {
             log.e("Invalid road weight!");
         } else {
-            mapManager.addRoad(args[0], args[1], std::stoi(args[2]));
+            cityManager.addRoad(args[0], args[1], std::stoi(args[2]));
             log.i("Road added.");
         }
     }
@@ -91,7 +91,7 @@ namespace citymap::cli {
             log.e("Invalid arguments!");
         } else {
             try {
-                if (mapManager.removeRoad(args[0], args[1])) {
+                if (cityManager.removeRoad(args[0], args[1])) {
                     log.i("Road removed.");
                 } else {
                     log.i("Road doesn't exist.");
@@ -109,7 +109,7 @@ namespace citymap::cli {
             log.e("Invalid arguments!");
         } else {
             try {
-                if (mapManager.hasPath(args[0], args[1])) {
+                if (cityManager.hasPath(args[0], args[1])) {
                     log.i("Yes");
                 } else {
                     log.i("No");
@@ -128,7 +128,7 @@ namespace citymap::cli {
         } else {
             try {
                 std::vector<lib::Path> paths =
-                        mapManager.findShortestPaths(args[0], args[1], SHORTEST_PATHS_COUNT);
+                        cityManager.findShortestPaths(args[0], args[1], SHORTEST_PATHS_COUNT);
 
                 if (!paths.empty()) {
                     printPaths(getOstream(), paths);
@@ -148,7 +148,7 @@ namespace citymap::cli {
             log.e("Invalid arguments!");
         } else {
             try {
-                if (mapManager.setCrossroadClosed(args[0], true)) {
+                if (cityManager.setCrossroadClosed(args[0], true)) {
                     log.i("Closed crossroad: " + args[0]);
                 } else {
                     log.i("Crossroad is already closed");
@@ -166,7 +166,7 @@ namespace citymap::cli {
             log.e("Invalid arguments!");
         } else {
             try {
-                if (mapManager.setCrossroadClosed(args[0], true)) {
+                if (cityManager.setCrossroadClosed(args[0], false)) {
                     log.i("Opened crossroad: " + args[0]);
                 } else {
                     log.i("Crossroad is already opened");
@@ -184,7 +184,7 @@ namespace citymap::cli {
             log.e("Invalid arguments!");
         } else {
             try {
-                if (mapManager.hasCycleFrom(args[0])) {
+                if (cityManager.hasCycleFrom(args[0])) {
                     log.i("Yes");
                 } else {
                     log.i("No");
@@ -201,7 +201,7 @@ namespace citymap::cli {
             return;
         }
 
-        lib::Path cycle = mapManager.findEulerCycle();
+        lib::Path cycle = cityManager.findEulerCycle();
 
         if (cycle.getPath().empty()) {
             log.i("No");
@@ -218,7 +218,7 @@ namespace citymap::cli {
             log.e("Invalid arguments!");
         } else {
             try {
-                if (mapManager.canReachAllFrom(args[0])) {
+                if (cityManager.canReachAllFrom(args[0])) {
                     log.i("Yes");
                 } else {
                     log.i("No");
@@ -237,7 +237,7 @@ namespace citymap::cli {
         }
 
         std::vector<std::pair<lib::CrossroadPtr, lib::CrossroadPtr>> deadEnds =
-                mapManager.findDeadEnds();
+                cityManager.findDeadEnds();
 
         if (deadEnds.empty()) {
             log.i("There are no dead-ends in this city");
@@ -247,7 +247,12 @@ namespace citymap::cli {
     }
 
     void CityMapCli::currentLocation(const std::vector<std::string> &args) {
-        log.i(cityTraveller.getCurrentLocation()->getName());
+        lib::CrossroadPtr currentLocation = cityTraveller.getCurrentLocation();
+        if (currentLocation) {
+            log.i(cityTraveller.getCurrentLocation()->getName());
+        } else {
+            log.e("Current city is still empty.");
+        }
     }
 
     void CityMapCli::changeLocation(const std::vector<std::string> &args) {
@@ -289,7 +294,7 @@ namespace citymap::cli {
             log.e("Invalid arguments!");
         }
 
-        std::vector<lib::CrossroadPtr> closed = mapManager.findClosedCrossroads();
+        std::vector<lib::CrossroadPtr> closed = cityManager.findClosedCrossroads();
         printCrossroads(getOstream(), closed);
     }
 
@@ -299,23 +304,23 @@ namespace citymap::cli {
         std::unordered_map<std::string, std::function<void(const std::vector<std::string>)>> commands;
         commands["open"] = [&](auto args) { open(args); };
         commands["save"] = [&](auto args) { save(args); };
-        commands["saveAs"] = [&](auto args) { saveAs(args); };
-        commands["addCrossroad"] = [&](auto args) { addCrossroad(args); };
-        commands["addRoad"] = [&](auto args) { addRoad(args); };
-        commands["removeRoad"] = [&](auto args) { removeRoad(args); };
-        commands["hasPath"] = [&](auto args) { hasPath(args); };
-        commands["findShortestPaths"] = [&](auto args) { findShortestPaths(args); };
-        commands["closeCrossroad"] = [&](auto args) { closeCrossroad(args); };
-        commands["openCrossroad"] = [&](auto args) { openCrossroad(args); };
-        commands["hasCycleFrom"] = [&](auto args) { hasCycleFrom(args); };
-        commands["findEulerCycle"] = [&](auto args) { hasEulerCycle(args); };
-        commands["canReachAllFrom"] = [&](auto args) { canReachAllFrom(args); };
-        commands["findDeadEnds"] = [&](auto args) { findDeadEnds(args); };
-        commands["currentLocation"] = [&](auto args) { currentLocation(args); };
-        commands["showNeighbours"] = [&](auto args) { showNeighbours(args); };
-        commands["changeLocation"] = [&](auto args) { changeLocation(args); };
-        commands["moveLocation"] = [&](auto args) { moveLocation(args); };
-        commands["showClosed"] = [&](auto args) { showClosed(args); };
+        commands["save_as"] = [&](auto args) { saveAs(args); };
+        commands["add"] = [&](auto args) { addCrossroad(args); };
+        commands["add_road"] = [&](auto args) { addRoad(args); };
+        commands["rm_road"] = [&](auto args) { removeRoad(args); };
+        commands["has_path"] = [&](auto args) { hasPath(args); };
+        commands["find_paths"] = [&](auto args) { findShortestPaths(args); };
+        commands["close"] = [&](auto args) { closeCrossroad(args); };
+        commands["open"] = [&](auto args) { openCrossroad(args); };
+        commands["has_cycle_from"] = [&](auto args) { hasCycleFrom(args); };
+        commands["euler_cycle"] = [&](auto args) { hasEulerCycle(args); };
+        commands["reach_all"] = [&](auto args) { canReachAllFrom(args); };
+        commands["dead_ends"] = [&](auto args) { findDeadEnds(args); };
+        commands["current"] = [&](auto args) { currentLocation(args); };
+        commands["neighbours"] = [&](auto args) { showNeighbours(args); };
+        commands["change"] = [&](auto args) { changeLocation(args); };
+        commands["mv"] = [&](auto args) { moveLocation(args); };
+        commands["closed"] = [&](auto args) { showClosed(args); };
 
         setCommands(commands);
     }

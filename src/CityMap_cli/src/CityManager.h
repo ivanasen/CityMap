@@ -1,5 +1,5 @@
-#ifndef CITYMAP_MAPMANAGER_H
-#define CITYMAP_MAPMANAGER_H
+#ifndef CITYMAP_CITYMANAGER_H
+#define CITYMAP_CITYMANAGER_H
 
 #include <bits/basic_string.h>
 #include <City.h>
@@ -7,13 +7,13 @@
 
 namespace citymap::cli {
 
-    class MapManager {
+    class CityManager {
     private:
         std::shared_ptr<lib::City> city;
         lib::DijkstraPathFinder pathFinder;
 
     public:
-        explicit MapManager(const std::shared_ptr<lib::City> &city);
+        explicit CityManager(const std::shared_ptr<lib::City> &city);
 
         void addCrossroad(const std::string &crossroad);
 
@@ -43,9 +43,9 @@ namespace citymap::cli {
         [[nodiscard]] const std::shared_ptr<lib::City> &getCity() const;
 
     private:
-        void requireCrossroadExists(const std::string &crossroad) const;
+        [[nodiscard]] lib::CrossroadPtr getCrossroad(const std::string &crossroad) const;
     };
 
 }
 
-#endif //CITYMAP_MAPMANAGER_H
+#endif //CITYMAP_CITYMANAGER_H

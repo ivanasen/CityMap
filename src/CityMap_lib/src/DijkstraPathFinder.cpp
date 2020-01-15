@@ -9,29 +9,19 @@ namespace citymap::lib {
     DijkstraPathFinder::DijkstraPathFinder(std::shared_ptr<City> city) : city(std::move(city)) {
     }
 
-    bool DijkstraPathFinder::hasPath(const std::string &from, const std::string &to) const {
-        CrossroadPtr fromPtr = city->getCrossroadByName(from);
-        CrossroadPtr toPtr = city->getCrossroadByName(to);
+    bool DijkstraPathFinder::hasPath(const CrossroadPtr &from, const CrossroadPtr &to) const {
         std::vector<CrossroadPtr> crossroads = city->getCrossroads();
-
-        if (!fromPtr) {
-            throw std::invalid_argument("Crossroad doesn't exist: " + from);
-        }
-
-        if (!toPtr) {
-            throw std::invalid_argument("Crossroad doesn't exist: " + to);
-        }
 
         std::vector<bool> visited(crossroads.size());
         std::queue<int> q;
 
-        q.push(fromPtr->getId());
+        q.push(from->getId());
 
         while (!q.empty()) {
             int currentCrossroad = q.front();
             q.pop();
 
-            if (currentCrossroad == toPtr->getId())
+            if (currentCrossroad == to->getId())
                 return true;
 
             for (const Road &road : crossroads[currentCrossroad]->getOutgoingRoads()) {
@@ -48,24 +38,21 @@ namespace citymap::lib {
     }
 
     std::vector<Path> DijkstraPathFinder::findShortestPaths(
-            const std::string &from,
-            const std::string &to,
+            const CrossroadPtr &from,
+            const CrossroadPtr &to,
             unsigned int pathsCount) const {
         std::vector<CrossroadPtr> crossroads = city->getCrossroads();
         std::vector<int> shortestPathsCount(crossroads.size());
 
-        CrossroadPtr fromPtr = city->getCrossroadByName(from);
-        CrossroadPtr toPtr = city->getCrossroadByName(to);
-
         std::vector<Path> bestPaths;
 
-        if (fromPtr->isClosed() || toPtr->isClosed())
+        if (from->isClosed() || to->isClosed())
             return bestPaths;
 
         std::priority_queue<Path, std::vector<Path>, Path::DistanceComparator> q;
-        q.push(Path({fromPtr}, 0));
+        q.push(Path({from}, 0));
 
-        while (!q.empty() && shortestPathsCount[toPtr->getId()] < pathsCount) {
+        while (!q.empty() && shortestPathsCount[to->getId()] < pathsCount) {
             Path current = q.top();
             q.pop();
 
@@ -73,7 +60,7 @@ namespace citymap::lib {
 
             shortestPathsCount[currentCrossroad->getId()]++;
 
-            if (currentCrossroad == toPtr) {
+            if (currentCrossroad == to) {
                 bestPaths.push_back(current);
             }
 
@@ -93,12 +80,11 @@ namespace citymap::lib {
         return bestPaths;
     }
 
-    bool DijkstraPathFinder::hasPathToAll(const std::string &start) const {
-        CrossroadPtr startNode = city->getCrossroadByName(start);
+    bool DijkstraPathFinder::hasPathToAll(const CrossroadPtr &start) const {
         const std::vector<CrossroadPtr> &crossroads = city->getCrossroads();
         std::vector<bool> visited(crossroads.size());
 
-        dfsUtil(visited, startNode);
+        dfsUtil(visited, start);
 
         for (bool b : visited) {
             if (!b) {

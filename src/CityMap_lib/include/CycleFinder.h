@@ -9,7 +9,7 @@ namespace citymap::lib {
 
     class CycleFinder {
     public:
-        static bool hasCycle(const City &city, const std::string &startName);
+        static bool hasCycle(const City &city, const CrossroadPtr &start);
 
         static bool hasEulerCycle(const City &city);
 

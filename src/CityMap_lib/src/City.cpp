@@ -47,4 +47,11 @@ namespace citymap::lib {
         return crossroads[iter->second];
     }
 
+    CrossroadPtr City::getCrossroadById(int id) const {
+        if (id < 0 || id >= crossroads.size()) {
+            return nullptr;
+        }
+        return crossroads[id];
+    }
+
 }

@@ -14,13 +14,13 @@ namespace citymap::lib {
     public:
         explicit DijkstraPathFinder(std::shared_ptr<City> city);
 
-        [[nodiscard]] bool hasPath(const std::string &from, const std::string &to) const override;
+        [[nodiscard]] bool hasPath(const CrossroadPtr &from, const CrossroadPtr &to) const override;
 
-        bool hasPathToAll(const std::string &start) const override;
+        bool hasPathToAll(const CrossroadPtr &start) const override;
 
         [[nodiscard]] std::vector<Path> findShortestPaths(
-                const std::string &from,
-                const std::string &to,
+                const CrossroadPtr &from,
+                const CrossroadPtr &to,
                 unsigned int pathsCount) const override;
     };
 
