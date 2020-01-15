@@ -42,7 +42,15 @@ The available commands are as follows:
 17. `change <crossroad-name>` - Change current location.
 18. `move <crossroad-name>` - Change current location only if a path to `<crossroad-name>` exists.
 19. `closed` - Show closed crossroads.
-20. `quit` - Quit the program.
+20. `exit` - Exit the program.
+
+## Project Structure
+
+The project is separated in to 4 main modules:
+1. **CityMap_lib** - Core functionality regarding cities, crossroads, path-search, cycle-serach.
+2. **CityMap_serialization** - Serialization functionality.
+3. **CityMap_cli** - Command-line User Interface related functionality.
+4. **CityMap_utils** - Often used Utility functions throughout the project.
 
 ### Third-party libraries used
 

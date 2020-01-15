@@ -6,7 +6,7 @@
 
 namespace citymap::utils {
 
-    const std::unordered_set<char> Strings::ESCAPE_CHARS = {
+    const std::unordered_set<char> Strings::ESCAPE_CHARS = { //NOLINT
             '"', '\\', '\n', '\t'
     };
 
@@ -95,39 +95,6 @@ namespace citymap::utils {
         return !trimmed.empty();
     }
 
-    bool Strings::isDecimal(const std::string &s) {
-        std::string trimmed = s;
-        trim(trimmed);
-
-        char decimalSeparator = '.';
-        bool foundDecimalSeparator = false;
-        for (char c : trimmed) {
-            if (std::isdigit(c)) {
-                continue;
-            } else if (c == decimalSeparator) {
-                if (foundDecimalSeparator) {
-                    return false;
-                }
-                foundDecimalSeparator = true;
-            } else {
-                return false;
-            }
-        }
-        return !trimmed.empty();
-    }
-
-    std::string Strings::toLowerCase(std::string string) {
-        std::string copy = std::move(string);
-        std::transform(copy.begin(), copy.end(), copy.begin(), ::tolower);
-        return copy;
-    }
-
-    std::string Strings::toUpperCase(std::string string) {
-        std::string copy = std::move(string);
-        std::transform(copy.begin(), copy.end(), copy.begin(), ::toupper);
-        return copy;
-    }
-
     std::string Strings::escape(const std::string &s) {
         std::string escaped;
 
@@ -148,95 +115,6 @@ namespace citymap::utils {
         }
 
         return escaped;
-    }
-
-    std::string Strings::unescape(const std::string &s) {
-        std::string unescaped;
-
-        for (size_t i = 0; i < s.size(); i++) {
-
-            if (s[i] == '\\' && i < s.size() - 1) {
-                i++;
-
-                switch (s[i]) {
-                    case 'n':
-                        unescaped += '\n';
-                        break;
-                    case 't':
-                        unescaped += '\t';
-                        break;
-                    default:
-                        unescaped += s[i];
-                }
-            } else {
-                unescaped += s[i];
-            }
-        }
-
-        return unescaped;
-    }
-
-    std::string Strings::addQuotes(const std::string &s) {
-        return "\"" + s + "\"";
-    }
-
-    std::string Strings::removeQuotes(const std::string &s) {
-        if (s.size() < 2) {
-            return s;
-        }
-
-        std::string noQuotes;
-        long startQuotesIndex = 0;
-        bool foundStartQuotes = false;
-        while (startQuotesIndex < s.size()
-               && (s[startQuotesIndex] == ' '
-                   || !foundStartQuotes)) {
-            if (s[startQuotesIndex] == '"') {
-                foundStartQuotes = true;
-            } else {
-                startQuotesIndex++;
-            }
-        }
-
-        if (startQuotesIndex == s.size() - 1) {
-            return s;
-        }
-
-        long endQuotesIndex = s.size() - 1;
-        bool foundEndQuotes = false;
-        while (endQuotesIndex >= 0
-               && (s[endQuotesIndex] == ' '
-                   || !foundEndQuotes)) {
-            if (s[endQuotesIndex] == '"') {
-                foundEndQuotes = true;
-            } else {
-                endQuotesIndex--;
-            }
-        }
-
-        if (startQuotesIndex == endQuotesIndex) {
-            return s;
-        }
-
-        if (foundStartQuotes && foundEndQuotes) {
-            return s.substr(startQuotesIndex + 1, endQuotesIndex - startQuotesIndex - 1);
-        } else {
-            return s;
-        }
-    }
-
-    bool Strings::ignoreCaseEquals(const std::string &a, const std::string &b) {
-        return std::equal(a.begin(), a.end(),
-                          b.begin(), b.end(),
-                          [](char a, char b) {
-                              return tolower(a) == tolower(b);
-                          });
-    }
-
-    std::string Strings::formatAsDisplayDecimalValue(double value) {
-        std::stringstream stream;
-        stream << std::fixed << std::setprecision(2) << value;
-        return stream.str();
     }
 
     std::string Strings::convertIstreamToString(std::istream &istream) {
