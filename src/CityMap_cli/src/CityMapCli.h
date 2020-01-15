@@ -61,6 +61,8 @@ namespace citymap::cli {
         void moveLocation(const std::vector<std::string> &args);
 
         void showClosed(const std::vector<std::string> &args);
+
+        bool requireArgumentsCount(const std::vector<std::string> &args, int count);
     };
 
 }

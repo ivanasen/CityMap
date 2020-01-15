@@ -37,6 +37,7 @@ namespace citymap::cli {
         std::string serialized = utils::Strings::convertIstreamToString(file);
         lib::City deserialized = formatter.deserialize(serialized);
         city = std::make_shared<lib::City>(deserialized);
+        currentFilePath = filePath;
 
         return city;
     }
@@ -56,6 +57,10 @@ namespace citymap::cli {
     void MapFileManager::saveAs(const std::string &savePath) {
         currentFilePath = savePath;
         save();
+    }
+
+    const std::string &MapFileManager::getCurrentFilePath() const {
+        return currentFilePath;
     }
 
 }

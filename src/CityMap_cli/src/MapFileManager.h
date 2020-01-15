@@ -27,6 +27,8 @@ namespace citymap::cli {
         [[nodiscard]] bool areChangesSaved() const;
 
         [[nodiscard]] std::shared_ptr<lib::City> getCity() const;
+
+        [[nodiscard]] const std::string &getCurrentFilePath() const;
     };
 
 }

@@ -23,7 +23,7 @@ After that a **CityMap_cli** executable should be available in the src/CityMap_c
 
 The available commands are as follows:
 
-1. `open <file-name>` - Open a CityMap file.
+1. `open_map <file-name>` - Open a CityMap file.
 2. `save` - Save the CityMap file.
 3. `save_as <location>` - Save CityMap file to location.
 4. `add <crossroad-name>` - Add a Crossroad to the city.
@@ -37,8 +37,8 @@ The available commands are as follows:
 13. `euler_cycle` - Find if there is an Euler cycle in the city.
 14. `reach_all <crossroad-name>` - Check if there is a path from `crossroad-name` to all other crossroads in the city.
 15. `dead_ends` - Find all dead-ends in the city.
-16. `current` - Print current location. (Not implemented)
-17. `neighbours` - Show neighbours to `currentLocation` crossroad. (Not implemented)
+16. `cl` - Print current location. (Not implemented)
+17. `nbs` - Show neighbours to `currentLocation` crossroad. (Not implemented)
 18. `change <crossroad-name>` - Change `currentLocation` (Not implemented)
 19. `mv <crossroad-name>` - Change `currentLocation` printing the travelled path. (Not implemented)
 20. `closed` - Show closed crossroads. (Not implemented)

@@ -18,27 +18,26 @@ namespace citymap::cli {
     }
 
     bool CityManager::removeRoad(const std::string &from, const std::string &to) {
-        getCrossroad(from);
-        getCrossroad(to);
+        requireCrossroadExists(from);
+        requireCrossroadExists(to);
 
         return city->removeRoad(from, to);
     }
 
     bool CityManager::hasPath(const std::basic_string<char> &from, const std::basic_string<char> &to) const {
-        getCrossroad(from);
-        getCrossroad(to);
-
-        return pathFinder.hasPath(from, to);
+        lib::CrossroadPtr fromPtr = requireCrossroadExists(from);
+        lib::CrossroadPtr toPtr = requireCrossroadExists(to);
+        return pathFinder.hasPath(fromPtr, toPtr);
     }
 
     std::vector<lib::Path>
     CityManager::findShortestPaths(const std::string &from, const std::string &to, int maxPathsCount) const {
-        lib::CrossroadPtr fromPtr = getCrossroad(from);
-        lib::CrossroadPtr toPtr = getCrossroad(to);
+        lib::CrossroadPtr fromPtr = requireCrossroadExists(from);
+        lib::CrossroadPtr toPtr = requireCrossroadExists(to);
         return pathFinder.findShortestPaths(fromPtr, toPtr, maxPathsCount);
     }
 
-    lib::CrossroadPtr CityManager::getCrossroad(const std::string &crossroad) const {
+    lib::CrossroadPtr CityManager::requireCrossroadExists(const std::string &crossroad) const {
         lib::CrossroadPtr c = city->getCrossroadByName(crossroad);
         if (!c) {
             throw std::invalid_argument("Crossroad " + crossroad + " doesn't exist");
@@ -47,7 +46,7 @@ namespace citymap::cli {
     }
 
     bool CityManager::setCrossroadClosed(const std::string &crossroad, bool closed) {
-        lib::CrossroadPtr crossroadPtr = getCrossroad(crossroad);
+        lib::CrossroadPtr crossroadPtr = requireCrossroadExists(crossroad);
 
         if (crossroadPtr->isClosed() == closed) {
             return false;
@@ -68,7 +67,7 @@ namespace citymap::cli {
     }
 
     bool CityManager::hasCycleFrom(const std::string &crossroad) const {
-        lib::CrossroadPtr crossroadPtr = getCrossroad(crossroad);
+        lib::CrossroadPtr crossroadPtr = requireCrossroadExists(crossroad);
         return lib::CycleFinder::hasCycle(*city, crossroadPtr);
     }
 
@@ -77,8 +76,8 @@ namespace citymap::cli {
     }
 
     bool CityManager::canReachAllFrom(const std::string &crossroad) const {
-        getCrossroad(crossroad);
-        return pathFinder.hasPathToAll(crossroad);
+        lib::CrossroadPtr ptr = requireCrossroadExists(crossroad);
+        return pathFinder.hasPathToAll(ptr);
     }
 
     std::vector<std::pair<lib::CrossroadPtr, lib::CrossroadPtr>> CityManager::findDeadEnds() const {
