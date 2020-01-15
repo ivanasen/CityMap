@@ -65,11 +65,11 @@ namespace citymap::lib {
             }
 
             if (shortestPathsCount[currentCrossroad->getId()] <= pathsCount) {
-                for (const Road &p : currentCrossroad->getOutgoingRoads()) {
-                    const std::weak_ptr<Crossroad> &weakPtr = p.getCrossroad();
+                for (const Road &road : currentCrossroad->getOutgoingRoads()) {
+                    const std::weak_ptr<Crossroad> &weakPtr = road.getCrossroad();
                     if (CrossroadPtr crossroad = weakPtr.lock()) {
                         if (!(crossroad->isClosed())) {
-                            Path newPath = current.addToPath(p);
+                            Path newPath = current.addToPath(road);
                             q.push(newPath);
                         }
                     }

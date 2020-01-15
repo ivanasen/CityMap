@@ -28,20 +28,21 @@ The available commands are as follows:
 3. `save_as <location>` - Save CityMap file to location.
 4. `add <crossroad-name>` - Add a Crossroad to the city.
 5. `add_road <from> <to> <weight>` - Add a Road.
-7. `rm_road <from> <to>` - Remove a Road.
-8. `has_path <from> <to>` - Is there a path from `from` to `to` in the city.
-9. `find_paths <from> <to>` - Find top 3 shortest paths.
-10. `close <crossroad-name>` - Close crossroad.
-11. `open <crossroad-name>` - Open crossroad.
-12. `has_cycle_from <crossroad-name>` - Check if there is a cycle in the city containing `crossroad-name`.
-13. `euler_cycle` - Find if there is an Euler cycle in the city.
-14. `reach_all <crossroad-name>` - Check if there is a path from `crossroad-name` to all other crossroads in the city.
-15. `dead_ends` - Find all dead-ends in the city.
-16. `cl` - Print current location. (Not implemented)
-17. `nbs` - Show neighbours to `currentLocation` crossroad. (Not implemented)
-18. `change <crossroad-name>` - Change `currentLocation` (Not implemented)
-19. `mv <crossroad-name>` - Change `currentLocation` printing the travelled path. (Not implemented)
-20. `closed` - Show closed crossroads. (Not implemented)
+6. `rm_road <from> <to>` - Remove a Road.
+7. `has_path <from> <to>` - Is there a path from `from` to `to` in the city.
+8. `show_paths <from> <to>` - Find top 3 shortest paths.
+9. `close <crossroad-name>` - Close crossroad.
+10. `open <crossroad-name>` - Open crossroad.
+11. `cycle_from <crossroad-name>` - Check if there is a cycle in the city containing `crossroad-name`.
+12. `tour` - Find if there is an Euler cycle in the city.
+13. `reach_all <crossroad-name>` - Check if there is a path from `crossroad-name` to all other crossroads in the city.
+14. `dead_ends` - Find all dead-ends in the city.
+15. `loc` - Print current location.
+16. `nbs` - Show neighbours to current location.
+17. `change <crossroad-name>` - Change current location.
+18. `move <crossroad-name>` - Change current location only if a path to `<crossroad-name>` exists.
+19. `closed` - Show closed crossroads.
+20. `quit` - Quit the program.
 
 ### Third-party libraries used
 

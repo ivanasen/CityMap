@@ -23,6 +23,8 @@ namespace citymap::lib {
 
         [[nodiscard]] int getWeight() const;
 
+        void setWeight(int weight);
+
         [[nodiscard]] const std::weak_ptr<Crossroad> &getCrossroad() const;
     };
 }

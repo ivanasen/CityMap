@@ -23,7 +23,7 @@ namespace citymap::lib {
 
     Path CycleFinder::findEulerCycle(const City &city) {
         if (!hasEulerCycle(city)) {
-            return Path({});
+            throw std::invalid_argument("City doesn't have an Euler cycle.");
         }
 
         const std::vector<CrossroadPtr> &crossroads = city.getCrossroads();

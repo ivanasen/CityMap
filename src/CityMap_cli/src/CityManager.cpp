@@ -10,6 +10,9 @@ namespace citymap::cli {
     }
 
     void CityManager::addCrossroad(const std::string &crossroad) {
+        if (city->getCrossroadByName(crossroad)) {
+            throw std::invalid_argument("Crossroad already exists!");
+        }
         city->addCrossroad(crossroad);
     }
 

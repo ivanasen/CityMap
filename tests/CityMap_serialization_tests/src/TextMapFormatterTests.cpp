@@ -2,6 +2,7 @@
 
 #include <catch.hpp>
 #include <random>
+#include <algorithm>
 #include <City.h>
 #include <TextMapFormatter.h>
 #include "Strings.h"
@@ -31,10 +32,17 @@ namespace citymap::serialization::tests {
 
             int roadCount = dist(mt) % maxRoadCount;
             if (roadCount) {
+                std::vector<int> roads(roadCount);
+                for (int j = 0; j < roads.size(); ++j) {
+                    roads[j] = j + 1;
+                }
+                std::shuffle(roads.begin(), roads.end(), mt);
+
                 for (int j = 0; j < roadCount; ++j) {
-                    std::string roadTo = std::to_string(dist(mt));
+                    std::string roadTo = std::to_string(roads.back());
                     int weight = dist(mt) + 1;
                     city.addRoad(crossroadName, roadTo, weight);
+                    roads.pop_back();
 
                     expected += ' ' + roadTo + ' ' + std::to_string(weight);
                 }
@@ -111,8 +119,9 @@ namespace citymap::serialization::tests {
         }
 
         SECTION("Small city with random roads and crossroads") {
-            auto cityWithSerialization = buildRandomCityWithExpectedSerialization(50, 50);
-            REQUIRE(formatter.serialize(cityWithSerialization.first) == cityWithSerialization.second);
+            auto cityWithSerialization = buildRandomCityWithExpectedSerialization(10, 10);
+            std::string serialized = formatter.serialize(cityWithSerialization.first);
+            REQUIRE(serialized == cityWithSerialization.second);
         }
 
         SECTION("Medium city with random roads and crossroads") {

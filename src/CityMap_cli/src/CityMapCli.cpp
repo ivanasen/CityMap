@@ -74,12 +74,16 @@ namespace citymap::cli {
             return;
         }
 
-        if (!requireArgumentsCount(args, 2)) {
+        if (!requireArgumentsCount(args, 1)) {
             return;
         }
 
-        cityManager.addCrossroad(args[0]);
-        log.i("Crossroad added");
+        try {
+            cityManager.addCrossroad(args[0]);
+            log.i("Crossroad added");
+        } catch (const std::invalid_argument &e) {
+            log.e(e.what());
+        }
     }
 
     void CityMapCli::addRoad(const std::vector<std::string> &args) {
@@ -235,13 +239,12 @@ namespace citymap::cli {
             return;
         }
 
-        lib::Path cycle = cityManager.findEulerCycle();
-
-        if (cycle.getPath().empty()) {
-            log.i("No");
-        } else {
+        try {
+            lib::Path cycle = cityManager.findEulerCycle();
             log.i("Yes: ");
             getOstream() << cycle;
+        } catch (const std::invalid_argument &e) {
+            log.i("No");
         }
     }
 
@@ -361,14 +364,14 @@ namespace citymap::cli {
         commands["find_paths"] = [&](auto args) { findShortestPaths(args); };
         commands["close"] = [&](auto args) { closeCrossroad(args); };
         commands["open"] = [&](auto args) { openCrossroad(args); };
-        commands["has_cycle_from"] = [&](auto args) { hasCycleFrom(args); };
-        commands["euler_cycle"] = [&](auto args) { hasEulerCycle(args); };
+        commands["cycle_from"] = [&](auto args) { hasCycleFrom(args); };
+        commands["tour"] = [&](auto args) { hasEulerCycle(args); };
         commands["reach_all"] = [&](auto args) { canReachAllFrom(args); };
         commands["dead_ends"] = [&](auto args) { findDeadEnds(args); };
-        commands["cl"] = [&](auto args) { currentLocation(args); };
+        commands["loc"] = [&](auto args) { currentLocation(args); };
         commands["nbs"] = [&](auto args) { showNeighbours(args); };
         commands["change"] = [&](auto args) { changeLocation(args); };
-        commands["mv"] = [&](auto args) { moveLocation(args); };
+        commands["move"] = [&](auto args) { moveLocation(args); };
         commands["closed"] = [&](auto args) { showClosed(args); };
 
         setCommands(commands);

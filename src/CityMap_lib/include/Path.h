@@ -32,9 +32,7 @@ namespace citymap::lib {
 
         class DistanceComparator {
         public:
-            bool operator()(const Path &left, const Path &right) {
-                return left.getDistance() < right.getDistance();
-            }
+            bool operator()(const Path &left, const Path &right) const;
         };
     };
 

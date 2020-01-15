@@ -40,13 +40,16 @@ namespace citymap::lib {
 
     std::string Path::toString() const {
         std::string result;
-        for (const CrossroadPtr &c : path) {
-            result += c->toString();
-            if (c != path.back()) {
+        for (int i = 0; i < path.size(); ++i) {
+            result += path[i]->toString();
+            if (i < path.size() - 1) {
                 result += " -> ";
             }
         }
         return result;
     }
 
+    bool Path::DistanceComparator::operator()(const Path &left, const Path &right) const {
+        return left.getDistance() > right.getDistance();
+    }
 }

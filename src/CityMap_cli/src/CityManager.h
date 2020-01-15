@@ -43,7 +43,7 @@ namespace citymap::cli {
         [[nodiscard]] const std::shared_ptr<lib::City> &getCity() const;
 
     private:
-        [[nodiscard]] lib::CrossroadPtr requireCrossroadExists(const std::string &crossroad) const;
+        lib::CrossroadPtr requireCrossroadExists(const std::string &crossroad) const; //NOLINT
     };
 
 }

@@ -11,6 +11,15 @@ namespace citymap::lib {
     class Road;
 
     class Crossroad {
+    private:
+        const int id;
+        const std::string name;
+        std::vector<Road> outgoingRoads;
+        std::vector<Road> incomingRoads;
+        std::unordered_map<int, int> outgoingIndexes;
+        std::unordered_map<int, int> incomingIndexes;
+        bool closed = false;
+
     public:
         Crossroad(int id, std::string name);
 
@@ -39,13 +48,6 @@ namespace citymap::lib {
         bool operator==(const Crossroad &other) const;
 
         bool operator!=(const Crossroad &other) const;
-
-    private:
-        const int id;
-        const std::string name;
-        std::vector<Road> outgoingRoads;
-        std::vector<Road> incomingRoads;
-        bool closed = false;
     };
 }
 

@@ -44,12 +44,12 @@ namespace citymap::lib {
         CrossroadPtr currentLocation = getCurrentLocation();
         CrossroadPtr targetLocation = city->getCrossroadByName(location);
 
-        if (!currentLocation) {
-            throw std::invalid_argument("The current city is empty.");
-        }
-
         if (!targetLocation) {
             throw std::invalid_argument("The target crossroad " + location + " doesn't exist.");
+        }
+
+        if (!currentLocation) {
+            throw std::invalid_argument("The current city is empty.");
         }
 
         std::vector<Path> paths = pathFinder.findShortestPaths(currentLocation, targetLocation, 1);

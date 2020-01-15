@@ -23,4 +23,8 @@ namespace citymap::lib {
     bool Road::operator!=(const Road &other) const {
         return !(*this == other);
     }
+
+    void Road::setWeight(int newWeight) {
+        this->weight = newWeight;
+    }
 }

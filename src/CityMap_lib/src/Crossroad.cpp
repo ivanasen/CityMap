@@ -7,39 +7,61 @@ namespace citymap::lib {
     }
 
     void Crossroad::addRoadTo(const std::weak_ptr<Crossroad> &crossroad, int weight) {
-        std::weak_ptr<Crossroad> weakPtr(crossroad);
-        outgoingRoads.emplace_back(weakPtr, weight);
+        std::shared_ptr<Crossroad> ptr = crossroad.lock();
+
+        auto iter = outgoingIndexes.find(ptr->getId());
+        if (iter != outgoingIndexes.end()) {
+            outgoingRoads[iter->second] = Road(crossroad, weight);
+            return;
+        }
+
+        outgoingIndexes[ptr->getId()] = outgoingRoads.size();
+        outgoingRoads.emplace_back(crossroad, weight);
     }
 
     bool Crossroad::removeRoadTo(const std::weak_ptr<Crossroad> &crossroad) {
-        for (size_t i = 0; i < outgoingRoads.size(); ++i) {
-            std::weak_ptr<Crossroad> ptr = outgoingRoads[i].getCrossroad();
-            if (crossroad.lock() == ptr.lock()) {
-                outgoingRoads[i] = outgoingRoads.back();
-                outgoingRoads.pop_back();
-                return true;
-            }
+        auto iter = outgoingIndexes.find(crossroad.lock()->getId());
+
+        if (iter == outgoingIndexes.end()) {
+            return false;
         }
 
-        return false;
+        outgoingRoads[iter->second] = outgoingRoads.back();
+        outgoingRoads.pop_back();
+
+        outgoingIndexes[outgoingRoads.size() - 1] = iter->second;
+        outgoingIndexes.erase(iter->first);
+
+        return true;
     }
 
     void Crossroad::addRoadFrom(const std::weak_ptr<Crossroad> &crossroad, int weight) {
-        std::weak_ptr<Crossroad> weakPtr(crossroad);
-        incomingRoads.emplace_back(weakPtr, weight);
+        std::shared_ptr<Crossroad> ptr = crossroad.lock();
+
+        auto iter = incomingIndexes.find(ptr->getId());
+        if (iter != incomingIndexes.end()) {
+            incomingRoads[iter->second] = Road(crossroad, weight);
+            return;
+        }
+
+        incomingIndexes[ptr->getId()] = incomingRoads.size();
+        incomingRoads.emplace_back(crossroad, weight);
     }
 
     bool Crossroad::removeRoadFrom(const std::weak_ptr<Crossroad> &crossroad) {
-        for (size_t i = 0; i < incomingRoads.size(); ++i) {
-            std::weak_ptr<Crossroad> ptr = incomingRoads[i].getCrossroad();
-            if (crossroad.lock() == ptr.lock()) {
-                incomingRoads[i] = incomingRoads.back();
-                incomingRoads.pop_back();
-                return true;
-            }
+        auto iter = incomingIndexes.find(crossroad.lock()->getId());
+
+        if (iter == incomingIndexes.end()) {
+            return false;
         }
 
-        return false;
+        incomingRoads[iter->second] = incomingRoads.back();
+        incomingRoads.pop_back();
+
+        incomingIndexes[outgoingRoads.size() - 1] = iter->second;
+        incomingIndexes.erase(iter->first);
+
+        return true;
     }
 
     std::string Crossroad::getName() const {
