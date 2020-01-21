@@ -35,8 +35,13 @@ namespace citymap::serialization {
 
                         ++i;
 
+                        std::string crossroadName = token.getValue();
                         int weight = std::stoi(tokens[i].getValue());
-                        city.addRoad(currentCrossroad, token.getValue(), weight);
+
+                        if (!city.getCrossroadByName(crossroadName)) {
+                            city.addCrossroad(crossroadName);
+                        }
+                        city.addRoad(currentCrossroad, crossroadName, weight);
                     }
 
                     break;

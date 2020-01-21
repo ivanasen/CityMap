@@ -14,14 +14,6 @@ namespace citymap::lib {
     }
 
     void City::addRoad(const std::string &from, const std::string &to, int weight) {
-        if (crossroadIndexes.find(from) == crossroadIndexes.end()) {
-            addCrossroad(from);
-        }
-
-        if (crossroadIndexes.find(to) == crossroadIndexes.end()) {
-            addCrossroad(to);
-        }
-
         CrossroadPtr fromPtr = getCrossroadByName(from);
         CrossroadPtr toPtr = getCrossroadByName(to);
         fromPtr->addRoadTo(toPtr, weight);

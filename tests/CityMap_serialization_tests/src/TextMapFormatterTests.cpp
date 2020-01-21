@@ -125,12 +125,12 @@ namespace citymap::serialization::tests {
         }
 
         SECTION("Medium city with random roads and crossroads") {
-            auto cityWithSerialization = buildRandomCityWithExpectedSerialization(500, 300);
+            auto cityWithSerialization = buildRandomCityWithExpectedSerialization(100, 100);
             REQUIRE(formatter.serialize(cityWithSerialization.first) == cityWithSerialization.second);
         }
 
         SECTION("Big city with random roads and crossroads") {
-            auto cityWithSerialization = buildRandomCityWithExpectedSerialization(5000, 5000);
+            auto cityWithSerialization = buildRandomCityWithExpectedSerialization(1000, 1000);
             REQUIRE(formatter.serialize(cityWithSerialization.first) == cityWithSerialization.second);
         }
     }

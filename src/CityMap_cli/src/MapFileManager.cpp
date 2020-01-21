@@ -34,7 +34,7 @@ namespace citymap::cli {
             throw std::invalid_argument("File doesn't exist or missing read permissions: \"" + filePath + "\"");
         }
 
-        std::string serialized = utils::Strings::convertIstreamToString(file);
+        std::string serialized(std::istreambuf_iterator<char>(file), {});
         lib::City deserialized = formatter.deserialize(serialized);
         city = std::make_shared<lib::City>(deserialized);
         currentFilePath = filePath;

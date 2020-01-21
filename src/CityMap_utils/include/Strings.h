@@ -20,25 +20,7 @@ namespace citymap::utils {
 
         static bool isInteger(const std::string &s);
 
-        static bool isDecimal(const std::string &s);
-
-        static std::string toLowerCase(std::string string);
-
-        static std::string toUpperCase(std::string string);
-
         static std::string escape(const std::string &s);
-
-        static std::string unescape(const std::string &s);
-
-        static std::string addQuotes(const std::string &s);
-
-        static std::string removeQuotes(const std::string &s);
-
-        static bool ignoreCaseEquals(const std::string &a, const std::string &b);
-
-        static std::string formatAsDisplayDecimalValue(double value);
-
-        static std::string convertIstreamToString(std::istream &istream);
 
     private:
         static const std::unordered_set<char> ESCAPE_CHARS;

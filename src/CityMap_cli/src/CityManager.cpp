@@ -17,6 +17,14 @@ namespace citymap::cli {
     }
 
     void CityManager::addRoad(const std::string &from, const std::string &to, int weight) {
+        if (!city->getCrossroadByName(from)) {
+            city->addCrossroad(from);
+        }
+
+        if (!city->getCrossroadByName(to)) {
+            city->addCrossroad(to);
+        }
+
         city->addRoad(from, to, weight);
     }
 

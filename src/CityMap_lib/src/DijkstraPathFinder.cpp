@@ -11,18 +11,20 @@ namespace citymap::lib {
 
     bool DijkstraPathFinder::hasPath(const CrossroadPtr &from, const CrossroadPtr &to) const {
         std::vector<CrossroadPtr> crossroads = city->getCrossroads();
+        int toId = to->getId();
 
         std::vector<bool> visited(crossroads.size());
         std::queue<int> q;
-
         q.push(from->getId());
 
         while (!q.empty()) {
             int currentCrossroad = q.front();
             q.pop();
 
-            if (currentCrossroad == to->getId())
+            if (currentCrossroad == toId)
                 return true;
+
+            visited[currentCrossroad] = true;
 
             for (const Road &road : crossroads[currentCrossroad]->getOutgoingRoads()) {
                 const std::weak_ptr<Crossroad> &weakPtr = road.getCrossroad();

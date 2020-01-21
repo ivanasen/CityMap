@@ -361,7 +361,7 @@ namespace citymap::cli {
         commands["add_road"] = [&](auto args) { addRoad(args); };
         commands["rm_road"] = [&](auto args) { removeRoad(args); };
         commands["has_path"] = [&](auto args) { hasPath(args); };
-        commands["find_paths"] = [&](auto args) { findShortestPaths(args); };
+        commands["show_paths"] = [&](auto args) { findShortestPaths(args); };
         commands["close"] = [&](auto args) { closeCrossroad(args); };
         commands["open"] = [&](auto args) { openCrossroad(args); };
         commands["cycle_from"] = [&](auto args) { hasCycleFrom(args); };
