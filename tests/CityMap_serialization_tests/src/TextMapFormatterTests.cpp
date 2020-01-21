@@ -11,14 +11,14 @@ namespace citymap::serialization::tests {
 
     TextMapFormatter formatter;
 
+    const int MAX_WEIGHT = 1000;
+
     static std::pair<lib::City, std::string>
     buildRandomCityWithExpectedSerialization(int crossroadCount, int maxRoadCount) {
         lib::City city;
         std::string expected;
 
-        std::random_device rd;
-        std::mt19937 mt(rd());
-        std::uniform_int_distribution<> dist(1, crossroadCount);
+        srand(1);
 
         for (int i = 1; i <= crossroadCount; ++i) {
             std::string crossroadName = std::to_string(i);
@@ -30,20 +30,16 @@ namespace citymap::serialization::tests {
 
             expected += crossroadName;
 
-            int roadCount = dist(mt) % maxRoadCount;
+            int roadCount = rand() % maxRoadCount;
             if (roadCount) {
-                std::vector<int> roads(roadCount);
+                std::vector<std::string> roads(roadCount);
                 for (int j = 0; j < roads.size(); ++j) {
-                    roads[j] = j + 1;
+                    roads[j] = std::to_string(j + 1);
                 }
-                std::shuffle(roads.begin(), roads.end(), mt);
 
-                for (int j = 0; j < roadCount; ++j) {
-                    std::string roadTo = std::to_string(roads.back());
-                    int weight = dist(mt) + 1;
+                for (const std::string &roadTo : roads) {
+                    int weight = rand() % MAX_WEIGHT;
                     city.addRoad(crossroadName, roadTo, weight);
-                    roads.pop_back();
-
                     expected += ' ' + roadTo + ' ' + std::to_string(weight);
                 }
             }
